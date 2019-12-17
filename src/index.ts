@@ -1,3 +1,4 @@
+import { AuthController } from './controller/auth.controller';
 import express from 'express';
 import loaders from './loaders';
 
@@ -24,6 +25,7 @@ async function startServer() {
     EventController(app);
     WitnessController(app);
     DrainingController(app);
+    AuthController(app);
 
     // Démarrage du serveur une fois que tout est correctement init
     app.listen(3000, () => console.log('Express server is running'));
