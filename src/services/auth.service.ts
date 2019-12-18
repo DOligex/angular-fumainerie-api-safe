@@ -10,7 +10,7 @@ export class AuthService {
     }
 
     async signUp(user: User) {
-        console.log(user);
+        console.log(user); //
 
         user.password = await hash(user.password);
         const all = await this.repository.save(user);

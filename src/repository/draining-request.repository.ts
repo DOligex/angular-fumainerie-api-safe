@@ -3,7 +3,7 @@ import { DbHandler } from './db.handler';
 export class DrainingRequestRepository {
 
     private GET_ALL = 'SELECT * FROM draining_request;';
-    private GET_BY_ID = 'SELECT * FROM draining_request where id =';
+    private GET_BY_ID = 'SELECT * FROM draining_request where id = ?';
 
     private db: DbHandler;
 
