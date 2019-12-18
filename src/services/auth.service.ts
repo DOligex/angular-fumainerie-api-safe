@@ -1,8 +1,6 @@
 import { UserRepository } from '../repository/user.repository';
 import { User } from '../models/user';
 import { hash, verify } from 'argon2';
-
-import jwt = require('express-jwt');
 import { sign } from 'jsonwebtoken';
 
 export class AuthService {
@@ -22,7 +20,6 @@ export class AuthService {
     async signIn(email: string, password: string) {
         const user = await this.repository.findByEmail(email);
         const error = new Error('Invalid credentials');
-        const kik = jwt;
 
         if (!user) {
             throw error;

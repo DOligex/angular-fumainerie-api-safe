@@ -13,11 +13,11 @@ import { AbstractController } from '../core/abstract.controller';
 //     const documentRouter: Router = express.Router();
 //     const documentService = new DocumentService();
 
-//     documentRouter.post('/', (req: Request, res: Response) => {
-//         const document = req.body;
-//         documentService.upload(document);
-//         res.send(document);
-//     });
+    // documentRouter.post('/', (req: Request, res: Response) => {
+    //     const document = req.body;
+    //     documentService.upload(document);
+    //     res.send(document);
+    // });
 
 //     documentRouter.put('/:id', (req: Request, res: Response) => {
 //         const id = parseInt(req.params.id, 10);
@@ -58,6 +58,7 @@ import { AbstractController } from '../core/abstract.controller';
 // };
 
 export class DocumentController extends AbstractController<Document> {
+    protected route: string;
     service = new DocumentService();
 
     constructor(app: Application) {
