@@ -1,31 +1,17 @@
 import { DbHandler } from './db.handler';
 import { Document } from './../models/document';
+import { AbstractRepository } from '../core/abstract.repository';
 
-export class DocumentRepository {
+export class DocumentRepository extends AbstractRepository<Document> {
+    protected TABLE_NAME = 'document';
 
-    private GET_ALL = 'SELECT * FROM document;';
+    // private GET_ALL = 'SELECT * FROM document;';
     private GET_BY_ID = 'SELECT * FROM document where id = ?';
     private GET_DOC_BY_SEARCH = 'SELECT * FROM document WHERE title LIKE ? OR description LIKE ?' ;
     private POST_BY_ID = 'INSERT INTO document SET ?';
     private PUT_BY_ID = 'UPDATE document SET ? WHERE id = ?';
     private DEL_BY_ID = 'DELETE FROM document WHERE id = ?';
 
-    private db: DbHandler;
-
-    constructor() {
-        this.db =  DbHandler.getInstance();
-
-    }
-
-    async findAll() {
-        // this.db.query(this.GET_ALL).then((reust) => {
-        //     console.log(reust);
-        // });
-
-        // Ou alors on peut ecrire =>
-        const result = await this.db.query(this.GET_ALL);
-        return result;
-    }
     // Recherche des documents avec barre de recherche
     async searchDocument(word: string) {
         const searchWord = '%' + word + '%';

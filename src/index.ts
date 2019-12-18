@@ -18,7 +18,7 @@ async function startServer() {
     await loaders(app);
 
     // Ajout des différentes route de votre application
-    DocumentController(app);
+    const doc = new DocumentController(app);
     HomeController(app);
     SportController(app);
     UserController(app);

@@ -1,17 +1,15 @@
 import { DocumentRepository } from '../repository/document.repository';
 import { Document } from '../models/document';
+import { AbstractService } from '../core/abstract.service';
 /**
  * Cette classe est un service
  * C'est ici que l'ensemble de la logique consernant les documents doit apparaitre.
  * Attention ! Mettez le moins possible d'elements dans le controlleur
  */
-export class DocumentService {
+export class DocumentService extends AbstractService<Document> {
 
     // Un singeleton est une class ayant une instance unique a travers toute l'app
-    private repository: DocumentRepository;
-    constructor() {
-        this.repository = new DocumentRepository();
-    }
+    repository = new DocumentRepository();
 
     // Business logic
 
