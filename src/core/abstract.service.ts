@@ -5,17 +5,18 @@ export abstract class AbstractService<T> {
     // Un singeleton est une class ayant une instance unique a travers toute l'app
     protected abstract repository: AbstractRepository<T>;
 
+    // Récupération de tous les éléments
     async getAll() {
         const all = await this.repository.findAll();
         return all;
     }
 
+    // Récupération des éléments par Id
     async getById(id: number) {
         // Vérification des données
         if (!Number.isInteger(id)) {
             throw new Error('error');
         }
-
         // Récupération de l'élément
         return await this.repository.findById(id);
     }

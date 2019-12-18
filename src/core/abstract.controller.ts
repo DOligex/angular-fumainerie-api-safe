@@ -48,9 +48,9 @@ export abstract class AbstractController<T> {
 
         abstractRouter.put('/:id', (req: Request, res: Response) => {
             const id = parseInt(req.params.id, 10);
-            const document = req.body;
-            this.service.modifyElement({ element, id });
-            res.send(document);
+            const element = req.body;
+            this.service.modifyElement(element, id );
+            res.send(element);
         });
 
         abstractRouter.delete('/:id', (req: Request, res: Response) => {
@@ -60,9 +60,9 @@ export abstract class AbstractController<T> {
         });
 
         abstractRouter.post('/', (req: Request, res: Response) => {
-            const document = req.body;
-            this.service.upload(document);
-            res.send(document);
+            const element = req.body;
+            this.service.upload(element);
+            res.send(element);
         });
         return abstractRouter;
     }

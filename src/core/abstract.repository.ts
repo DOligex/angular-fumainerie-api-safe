@@ -17,7 +17,6 @@ export abstract class AbstractRepository<T> {
         this.PUT_BY_ID = `UPDATE ${tablename} SET ? WHERE id = ? ;`;
         this.DEL_BY_ID = `DELETE FROM ${tablename} WHERE ? ;`;
         this.POST_BY_ID = `INSERT INTO ${tablename} SET ? ;`;
-
     }
 
     findAll(): Promise<T[]> {
