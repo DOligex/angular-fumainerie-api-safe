@@ -10,6 +10,7 @@ export class Witness {
     public deleteAt!: string;
     public note!: number;
     public status!: boolean;
+    public title!: string;
     public description!: string;
     public user_id!: number;
 
