@@ -1,5 +1,5 @@
-import { DocumentRepository } from '../repository/document.repository';
 import { Document } from '../models/document';
+import { DocumentRepository } from '../repository/document.repository';
 import { AbstractService } from '../core/abstract.service';
 /**
  * Cette classe est un service
