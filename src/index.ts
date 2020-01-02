@@ -1,3 +1,4 @@
+import { SlotController } from './controller/slot.controller';
 import { AuthController } from './controller/auth.controller';
 import express from 'express';
 import loaders from './loaders';
@@ -28,6 +29,7 @@ async function startServer() {
     DrainingController(app);
     AuthController(app);
     QuestionController(app);
+    SlotController(app);
 
     // Démarrage du serveur une fois que tout est correctement init
     app.listen(3000, () => console.log('Express server is running'));
