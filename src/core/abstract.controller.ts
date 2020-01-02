@@ -3,7 +3,7 @@ import { AbstractService } from './abstract.service';
 import jwt from 'express-jwt';
 
 export abstract class AbstractController<T> {
-    protected abstract route: string;
+    // protected abstract route: string;
     protected abstract service: AbstractService<T>;
 
     constructor(path: string, app: Application) {

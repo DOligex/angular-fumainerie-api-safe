@@ -11,7 +11,7 @@ export class DocumentController extends AbstractController<Document> {
     service = new DocumentService();
 
     constructor(app: Application) {
-        super('documents', app );
+        super('document', app );
     }
 
     protected setupAdditionalRoute(router: express.Router): void | express.Router {

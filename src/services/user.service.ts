@@ -1,35 +1,14 @@
 import { UserRepository } from '../repository/user.repository';
 import { User } from '../models/user';
+import { AbstractService } from '../core/abstract.service';
 
-export class UserService {
+export class UserService extends AbstractService<User> {
 
-    private repository: UserRepository;
-    constructor() {
-        this.repository = new UserRepository();
+    repository = new UserRepository();
+
+    async getBySearch(word: string) {
+        const search = await this.repository.findByEmail(word);
+        return search;
     }
 
-    async getAll() {
-        const all = await this.repository.findAll();
-        return all;
-    }
-
-    async getById(id: number) {
-        if (!Number.isInteger(id)) {
-            throw new Error('error');
-        }
-
-        return await this.repository.findById(id);
-    }
-
-    async upload(user: User) {
-        return this.repository.save(user);
-    }
-
-    async modifyUser(user: User, id: number) {
-        return this.repository.modify(user, id);
-    }
-
-    async deleteUser(id: number) {
-        return this.repository.delete(id);
-    }
 }
