@@ -10,6 +10,7 @@ import { UserController } from './controller/user.controller';
 import { HomeController } from './controller/home.controller';
 import { DrainingController } from './controller/draining.controller';
 import { QuestionController } from './controller/question.controller';
+import { DrainingRequestController } from './controller/draining-request.controller';
 
 async function startServer() {
     // Récupération de l'application initiale
@@ -21,8 +22,9 @@ async function startServer() {
     // Ajout des différentes route de votre application
     const doc = new DocumentController(app);
     const drain = new DrainingController(app);
+    const drainrequ = new DrainingRequestController(app);
     const event = new EventController(app);
-    HomeController(app);
+    const home = new HomeController(app);
     SportController(app);
     UserController(app);
     WitnessController(app);
