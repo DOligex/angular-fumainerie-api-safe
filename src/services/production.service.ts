@@ -1,22 +1,9 @@
+import { Production } from '../models/production';
 import { ProductionRepository } from '../repository/production.repository';
+import { AbstractService } from '../core/abstract.service';
 
-export class ProductionService {
+export class ProductionService extends AbstractService<Production> {
 
-    private repository: ProductionRepository;
-    constructor() {
-        this.repository = new ProductionRepository();
-    }
-
-    async getAll() {
-        const all = await this.repository.findAll();
-        return all;
-    }
-
-    async getById(id: number) {
-        if (!Number.isInteger(id)) {
-            throw new Error('error');
-        }
-        return await this.repository.findById(id);
-    }
+        repository = new ProductionRepository();
 
 }
