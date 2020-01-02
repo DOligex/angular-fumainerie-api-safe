@@ -2,7 +2,7 @@ import { AuthController } from './controller/auth.controller';
 import express from 'express';
 import loaders from './loaders';
 
-import { WitnessController } from './controller/wildness.controller';
+import { WitnessController } from './controller/witness.controller';
 import { EventController } from './controller/event.controller';
 import { DocumentController } from './controller/document.controller';
 import { UserController } from './controller/user.controller';
@@ -30,9 +30,7 @@ async function startServer() {
     const question = new QuestionController(app);
     const slot = new SlotController(app);
     const use = new UserController(app);
-    // UserController(app);
-    // const witness = new WitnessController(app);
-    WitnessController(app);
+    const witness = new WitnessController(app);
     AuthController(app);
 
     // Démarrage du serveur une fois que tout est correctement init
