@@ -1,43 +1,24 @@
 import { Question } from './../models/question';
 import { DbHandler } from './db.handler';
+import { AbstractRepository } from '../core/abstract.repository';
 
-export class QuestionRepository {
-
-    private GET_ALL = 'SELECT * FROM question join user on user_id = user.id ';
-    private GET_BY_ID = 'SELECT * FROM question join user on user_id = user.id WHERE id = ?;';
-    private POST_BY_ID = 'INSERT INTO question join user on user_id = user.id SET ?;';
-    private PUT_BY_ID = 'UPDATE question join user on user_id = user.id SET ? WHERE id = ?;';
-    private DEL_BY_ID = 'DELETE FROM question join user on user_id = user.id WHERE id = ?;';
-
-    private db: DbHandler;
+export class QuestionRepository extends AbstractRepository<Question> {
 
     constructor() {
-        this.db =  DbHandler.getInstance();
+        super('question');
     }
+    private GET_ASK_BY_SEARCH = 'SELECT * FROM question WHERE topic LIKE ? OR question LIKE ? ' ;
+    private GET_ASK_BY_TRAITED = 'SELECT * FROM question WHERE traited === oui OR traited === non ' ;
 
-    async findAll() {
-
-        const result = await this.db.query(this.GET_ALL);
+    // Recherche des documents avec barre de recherche
+    async searchQuestion(word: string) {
+        const searchWord = '%' + word + '%';
+        const result = await this.db.query(this.GET_ASK_BY_SEARCH, [searchWord, searchWord]);
         return result;
     }
-
-    async findById(id: number) {
-        const question = await this.db.query(this.GET_BY_ID , id);
-        return question;
-    }
-
-    async save(question: Question) {
-        const postQuestion = await this.db.query(this.POST_BY_ID, question);
-        return postQuestion;
-    }
-
-    async modifyQuestion(question: Question, id: number) {
-        const modifyQuestion = await this.db.query(this.PUT_BY_ID, [question, id]);
-        return modifyQuestion;
-    }
-
-    async deleteQuestion(id: number) {
-        const deleteQuestion = await this.db.query(this.DEL_BY_ID , id);
-        return deleteQuestion;
+    async searchQuestionStatus(word: string) {
+        const searchWord = '%' + word + '%';
+        const result = await this.db.query(this.GET_ASK_BY_TRAITED, [searchWord, searchWord]);
+        return result;
     }
 }
