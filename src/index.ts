@@ -19,13 +19,14 @@ async function startServer() {
     await loaders(app);
 
     // Ajout des différentes route de votre application
-    const doc = new DocumentController(app); // a reproduire
+    const doc = new DocumentController(app); // à reproduire
+    const drain = new DrainingController(app);
     HomeController(app);
     SportController(app);
     UserController(app);
     EventController(app);
     WitnessController(app);
-    DrainingController(app);
+    // DrainingController(app);
     AuthController(app);
     QuestionController(app);
 

@@ -7,7 +7,7 @@ import { AbstractController } from '../core/abstract.controller';
 // @param app l'application express
 
 export class DocumentController extends AbstractController<Document> {
-    protected route: string;
+    protected route!: string;
     service = new DocumentService();
 
     constructor(app: Application) {
