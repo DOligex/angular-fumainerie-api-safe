@@ -5,12 +5,12 @@ import loaders from './loaders';
 import { WitnessController } from './controller/wildness.controller';
 import { EventController } from './controller/event.controller';
 import { DocumentController } from './controller/document.controller';
-import { SportController } from './controller/sport.controller';
 import { UserController } from './controller/user.controller';
 import { HomeController } from './controller/home.controller';
 import { DrainingController } from './controller/draining.controller';
 import { QuestionController } from './controller/question.controller';
 import { DrainingRequestController } from './controller/draining-request.controller';
+import { OccupantController } from './controller/occupant.controller';
 
 async function startServer() {
     // Récupération de l'application initiale
@@ -25,7 +25,7 @@ async function startServer() {
     const drainrequ = new DrainingRequestController(app);
     const event = new EventController(app);
     const home = new HomeController(app);
-    SportController(app);
+    const occupant = new OccupantController(app);
     UserController(app);
     WitnessController(app);
     // DrainingController(app);
