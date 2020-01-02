@@ -40,4 +40,5 @@ export class UserRepository {
         const deleteUser = await this.db.query(this.DEL_BY_ID , id);
         return deleteUser;
     }
+
 }
