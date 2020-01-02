@@ -3,7 +3,6 @@ import { DbHandler } from '../repository/db.handler';
 
 export default async () => {
 
-
   const connexion = mysql.createConnection({
     host: process.env.WILD_API_DB_HOST,
     port: 1234,
@@ -14,7 +13,7 @@ export default async () => {
 
   DbHandler.getInstance(connexion);
 
-  connexion.connect(function(err) {
+  connexion.connect((err) => {
     if (err) { throw err; }
     console.log('Connected!');
   });

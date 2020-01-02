@@ -31,7 +31,7 @@ export const WitnessController = (app: Application) => {
     });
 
     witnessRouter.get('/', async (req: Request, res: Response) => {
-        const result = await witnessService.getAll();
+        const result = await witnessService.getValided();
         res.send(result);
     });
 
@@ -44,6 +44,11 @@ export const WitnessController = (app: Application) => {
         } catch (error) {
             res.status(404).send('L\'id n\'a pas été trouvé' + id);
         }
+    });
+
+    witnessRouter.get('/validations', async (req: Request, res: Response) => {
+        const result = await witnessService.getAll();
+        res.send(result);
     });
 
     app.use('/witness', witnessRouter);

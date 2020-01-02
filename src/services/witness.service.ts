@@ -20,6 +20,10 @@ export class WitnessService {
         const all = await this.repository.findAll();
         return all;
     }
+    async getValided() {
+        const valided = await this.repository.findValided();
+        return valided;
+    }
 
     async getById(id: number) {
         // Vérification des données
