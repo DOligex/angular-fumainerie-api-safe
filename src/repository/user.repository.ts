@@ -8,6 +8,7 @@ export class UserRepository {
     private POST_BY_ID = 'INSERT INTO user SET ?';
     private PUT_BY_ID = 'UPDATE user SET ? WHERE id = ?';
     private DEL_BY_ID = 'DELETE FROM user WHERE id = ?';
+    private GET_BY_EMAIL = 'SELECT * FROM user WHERE email = ?;';
 
     private db: DbHandler;
 
@@ -39,5 +40,9 @@ export class UserRepository {
     async delete(id: number) {
         const deleteUser = await this.db.query(this.DEL_BY_ID , id);
         return deleteUser;
+    }
+    async findByEmail(email: string) {
+        const users = await (this.db.query(this.GET_BY_EMAIL, email) as Promise<User[]>);
+        return users[0] || null;
     }
 }

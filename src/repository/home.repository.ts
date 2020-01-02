@@ -3,8 +3,8 @@ import { Home } from './../models/home';
 
 export class HomeRepository {
 
-    private GET_ALL = 'SELECT * FROM home;';
-    private GET_BY_ID = 'SELECT * FROM home where id = ?';
+    private GET_ALL = 'SELECT * FROM home';
+    private GET_BY_ID = 'SELECT * FROM home WHERE id = ?';
     private POST_BY_ID = 'INSERT INTO home SET ?';
     private PUT_BY_ID = 'UPDATE home SET ? WHERE id = ?';
     private DEL_BY_ID = 'DELETE FROM home WHERE id = ?';
