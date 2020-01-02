@@ -2,14 +2,12 @@ import { Witness } from './../models/witness';
 import { DbHandler } from './db.handler';
 
 export class WitnessRepository {
-
-
-    private GET_ALL = 'SELECT * FROM witness JOIN user ON user.id= user_id;';
-    private GET_BY_ID = 'SELECT * FROM witness JOIN user ON user.id= user_id WHERE id = ?';
-    private POST_BY_ID = 'INSERT INTO witness JOIN user ON user.id= user_id SET ?';
-    private PUT_BY_ID = 'UPDATE witness JOIN user ON user.id= user_id SET ? WHERE id = ?';
-    private DEL_BY_ID = 'DELETE FROM witness JOIN user ON user.id= user_id WHERE id = ?';
-
+    private GET_ALL = 'SELECT * FROM witness join user on user_id = user.id;';
+    private GET_VALIDED = 'SELECT * FROM witness JOIN user ON user_id = user.id WHERE status=1;';
+    private GET_BY_ID = 'SELECT * FROM witness join user on user_id = user.id WHERE id = ?;';
+    private POST_BY_ID = 'INSERT INTO witness join user on user_id = user.id SET ?;';
+    private PUT_BY_ID = 'UPDATE witness join user on user_id = user.id SET ? WHERE id = ?;';
+    private DEL_BY_ID = 'DELETE FROM witness join user on user_id = user.id WHERE id = ?;';
 
     private db: DbHandler;
 
@@ -20,6 +18,10 @@ export class WitnessRepository {
     async findAll() {
 
         const result = await this.db.query(this.GET_ALL);
+        return result;
+    }
+    async findValided() {
+        const result = await this.db.query(this.GET_VALIDED);
         return result;
     }
 
