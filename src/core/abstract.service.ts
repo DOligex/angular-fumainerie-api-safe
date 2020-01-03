@@ -2,7 +2,7 @@ import { AbstractRepository } from './abstract.repository';
 
 export abstract class AbstractService<T> {
 
-    // Un singeleton est une class ayant une instance unique a travers toute l'app
+    // Un singleton est une class ayant une instance unique à travers toute l'app
     protected abstract repository: AbstractRepository<T>;
 
     // Récupération de tous les éléments
