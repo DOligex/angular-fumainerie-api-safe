@@ -8,6 +8,8 @@ export class Slot {
     public createAt!: string;
     public updateAt!: string;
     public deleteAt!: string;
+    public startAt!: string;
+    public endAt!: string;
     public name!: string;
 
     constructor(input: Slot) {
