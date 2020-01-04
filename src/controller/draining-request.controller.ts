@@ -12,12 +12,12 @@ export class DrainingRequestController extends AbstractController<DrainingReques
     service = new DrainingRequestService();
 
     constructor(app: Application) {
-        super('draining', app );
+        super('drainingRequest', app );
     }
 
     protected setupAdditionalRoute(router: express.Router): void | express.Router {
         // route spécifique à décrire ci-dessous
-        router.get('/specificroute', (req, res) => {
+        router.get('/drainingRequestByUserId', (req, res) => {
             res.send('totot');
         });
 

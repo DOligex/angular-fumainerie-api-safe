@@ -4,7 +4,7 @@ import { AbstractRepository } from '../core/abstract.repository';
 export class DrainingRequestRepository extends AbstractRepository<DrainingRequest> {
 
     constructor() {
-        super('draining-request');
+        super('draining_request');
 
     }
 }
