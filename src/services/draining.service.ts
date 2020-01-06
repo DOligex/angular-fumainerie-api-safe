@@ -1,35 +1,14 @@
 import { DrainingRepository } from '../repository/draining.repository';
 import { Draining } from '../models/draining';
+import { AbstractService } from '../core/abstract.service';
 
-export class DrainingService {
+export class DrainingService extends AbstractService<Draining> {
 
-    private repository: DrainingRepository;
-    constructor() {
-        this.repository = new DrainingRepository();
+    repository = new DrainingRepository();
+
+    async getBySearch(word: string) {
+        const search = await this.repository.searchDraining(word);
+        return search;
     }
 
-    async getAll() {
-        const all = await this.repository.findAll();
-        return all;
-    }
-
-    async getById(id: number) {
-        if (!Number.isInteger(id)) {
-            throw new Error('error');
-        }
-
-        return await this.repository.findById(id);
-    }
-
-    async createDraining(draining: Draining) {
-        return this.repository.save(draining);
-    }
-
-    async modifyDraining(draining: Draining, id: number) {
-        return this.repository.modify(draining, id);
-    }
-
-    async deleteDraining(id: number) {
-        return this.repository.delete(id);
-    }
 }

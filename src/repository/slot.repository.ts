@@ -1,30 +1,15 @@
-import { DbHandler } from './db.handler';
-import { Slot } from './../models/slot';
 
-export class SlotRepository {
+import { AbstractRepository } from '../core/abstract.repository';
+import { Slot } from '../models/slot';
 
-    private GET_ALL = 'SELECT * FROM slot;';
-    private GET_BY_ID = 'SELECT * FROM slot where id = ?';
-
-    private db: DbHandler;
+export class SlotRepository extends AbstractRepository<Slot> {
 
     constructor() {
-        this.db =  DbHandler.getInstance();
+        super('slot');
 
     }
 
-    async findAll() {
-
-        const result = await this.db.query(this.GET_ALL);
-        return result;
-    }
-
-    async findById(id: number) {
-        const slot = await this.db.query(this.GET_BY_ID + id);
-        return slot;
-    }
-
-    save(slot: any) {
-        // votre code ici
-    }
+    // async save(slot: any) {
+    //     // votre code ici
+    // }
 }
