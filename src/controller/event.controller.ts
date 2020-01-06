@@ -4,7 +4,6 @@ import { EventService } from './../services/event.service';
 
 export const EventController = (app: Application) => {
     const service = new EventService();
-
     const router = commonController(app, service);
 
     router.get('/specificroute', (req, res) => {
