@@ -1,44 +1,18 @@
 import { Draining } from './../models/draining';
-import { DbHandler } from './db.handler';
+import { AbstractRepository } from '../core/abstract.repository';
 
-export class DrainingRepository {
-
-    private GET_ALL = 'SELECT * FROM draining;';
-    private GET_BY_ID = 'SELECT * FROM draining where id = ?';
-    private POST_BY_ID = 'INSERT INTO draining SET ?';
-    private PUT_BY_ID = 'UPDATE draining SET ? WHERE id = ?';
-    private DEL_BY_ID = 'DELETE FROM draining WHERE id = ?';
-    // ajouter une requete de sélection par date
-
-    private db: DbHandler;
+export class DrainingRepository extends AbstractRepository<Draining> {
 
     constructor() {
-        this.db =  DbHandler.getInstance();
-
+        super('draining');
     }
 
-    async findAll() {
-        const result = await this.db.query(this.GET_ALL);
+    private GET_DRAINING_BY_DATE = 'SELECT * FROM draining WHERE site_arrival_time LIKE ? OR check_date LIKE ?';
+
+    async searchDraining(word: string) {
+        const searchWord = '%' + word + '%';
+        const result = await this.db.query(this.GET_DRAINING_BY_DATE, [searchWord, searchWord]);
         return result;
     }
 
-    async findById(id: number) {
-        const draining = await this.db.query(this.GET_BY_ID , id);
-        return draining;
-    }
-
-    async save(draining: Draining) {
-        const postDraining = await this.db.query(this.POST_BY_ID, draining);
-        return postDraining;
-    }
-
-    async modify(draining: Draining, id: number) {
-        const modifyDraining = await this.db.query(this.PUT_BY_ID, [draining, id]);
-        return modifyDraining;
-    }
-
-    async delete(id: number) {
-        const deleteDraining = await this.db.query(this.DEL_BY_ID , id);
-        return deleteDraining;
-    }
 }

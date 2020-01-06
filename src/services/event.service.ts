@@ -1,40 +1,15 @@
 
 import { Event } from './../models/event';
 import { EventRepository } from '../repository/event.repository';
+import { AbstractService } from '../core/abstract.service';
 
-export class EventService {
+export class EventService extends AbstractService<Event> {
 
-    private repository: EventRepository;
-    constructor() {
-        this.repository = new EventRepository();
-    }
+    repository = new EventRepository();
 
-    async getAll() {
-        const all = await this.repository.findAll();
-        return all;
-    }
-
-    async getById(id: number) {
-        if (!Number.isInteger(id)) {
-            throw new Error('error');
-        }
-
-        return await this.repository.findById(id);
-    }
-
-    // upload du Event
-    async upload(event: Event) {
-        return this.repository.save(event);
-    }
-
-    // modification du Event
-    async modifyEvent(event: Event, id: number) {
-        return this.repository.modifyEvent(event, id);
-    }
-
-    // suppression du Event
-    async deleteEvent(id: number) {
-        return this.repository.deleteEvent(id);
-    }
-
+    // recherche évenement par mot clé
+    // async getBySearch(word: string) {
+    //     const search = await this.repository.searchEvent(word);
+    //     return search;
+    // }
 }

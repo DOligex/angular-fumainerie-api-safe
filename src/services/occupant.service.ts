@@ -1,23 +1,9 @@
+import { Occupant } from '../models/occupant';
 import { OccupantRepository } from '../repository/occupant.repository';
+import { AbstractService } from '../core/abstract.service';
 
-export class OccupantService {
+export class OccupantService extends AbstractService<Occupant> {
 
-    private repository: OccupantRepository;
-    constructor() {
-        this.repository = new OccupantRepository();
-    }
-
-    async getAll() {
-        const all = await this.repository.findAll();
-        return all;
-    }
-
-    async getById(id: number) {
-        if (!Number.isInteger(id)) {
-            throw new Error('error');
-        }
-
-        return await this.repository.findById(id);
-    }
+    repository = new OccupantRepository();
 
 }

@@ -1,28 +1,10 @@
-import { DbHandler } from './db.handler';
+import { Occupant } from './../models/occupant';
+import { AbstractRepository } from '../core/abstract.repository';
 
-export class OccupantRepository {
-
-    private GET_ALL = 'SELECT * FROM occupant;';
-    private GET_BY_ID = 'SELECT * FROM occupant where id =';
-
-    private db: DbHandler;
+export class OccupantRepository extends AbstractRepository<Occupant> {
 
     constructor() {
-        this.db =  DbHandler.getInstance();
-
+        super('occupant');
     }
 
-    async findAll() {
-        const result = await this.db.query(this.GET_ALL);
-        return result;
-    }
-
-    async findById(id: number) {
-        const occupant = await this.db.query(this.GET_BY_ID + id);
-        return occupant;
-    }
-
-    save(occupant: any) {
-        // votre code ici
-    }
 }
