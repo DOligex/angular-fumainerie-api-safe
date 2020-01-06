@@ -1,37 +1,23 @@
-import express, { Router, Request, Response, Application } from 'express';
+import { Slot } from '../models/slot';
 import { SlotService } from '../services/slot.service';
+import express, {  Application } from 'express';
+import { AbstractController } from '../core/abstract.controller';
 
-/**
- * Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
- *
- * @param app l'application express
- */
-export const SlotController = (app: Application) => {
+export class SlotController extends AbstractController<Slot> {
+    protected route!: string;
+    service = new SlotService();
 
-    const slotRouter: Router = express.Router();
-    const slotService = new SlotService();
+    constructor(app: Application) {
+        super('slot', app);
+    }
 
-    slotRouter.post('/', (req: Request, res: Response) => {
-        const slot = req.body;
-        slotService.signUp(slot);
-        res.send(slot);
-    });
+    protected setupAdditionalRoute(router: express.Router): void | express.Router {
 
-    slotRouter.get('/', async (req: Request, res: Response) => {
-        const result = await slotService.getAll();
-        res.send(result);
-    });
+        router.get('/specificroute', (req, res) => {
+            res.send('totot');
+        });
 
-    slotRouter.get('/:id', async (req: Request, res: Response) => {
-        const id = parseInt(req.params.id, 10);
+        return router;
+                }
 
-        try {
-            const result = await slotService.getById(id);
-            res.send(result);
-        } catch (error) {
-            res.status(404).send('L\'id n\'a pas été trouvé' + id);
-        }
-    });
-
-    app.use('/slots', slotRouter);
-};
+}

@@ -1,14 +1,15 @@
-import { User } from '../models/user';
-import { UserService } from './../services/user.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
 
-export class UserController extends AbstractController<User> {
+import { Production } from '../models/production';
+import { ProductionService } from '../services/production.service';
+import { AbstractController } from '../core/abstract.controller';
+import express, { Application } from 'express';
+
+export class ProductionController extends AbstractController<Production> {
     protected route!: string;
-    service = new UserService();
+    service = new ProductionService();
 
     constructor(app: Application) {
-        super('user', app );
+        super('production', app );
     }
 
     protected setupAdditionalRoute(router: express.Router): void | express.Router {

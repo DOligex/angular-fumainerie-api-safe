@@ -1,47 +1,17 @@
 import { Witness } from './../models/witness';
-import { DbHandler } from './db.handler';
+import { AbstractRepository } from '../core/abstract.repository';
 
-export class WitnessRepository {
-    private GET_ALL = 'SELECT * FROM witness join user on user_id = user.id;';
-    private GET_VALIDED = 'SELECT * FROM witness JOIN user ON user_id = user.id WHERE status=1;';
-    private GET_BY_ID = 'SELECT * FROM witness join user on user_id = user.id WHERE id = ?;';
-    private POST_BY_ID = 'INSERT INTO witness join user on user_id = user.id SET ?;';
-    private PUT_BY_ID = 'UPDATE witness join user on user_id = user.id SET ? WHERE id = ?;';
-    private DEL_BY_ID = 'DELETE FROM witness join user on user_id = user.id WHERE id = ?;';
-
-    private db: DbHandler;
+export class WitnessRepository extends AbstractRepository<Witness> {
 
     constructor() {
-        this.db =  DbHandler.getInstance();
+        super('witness');
     }
 
-    async findAll() {
+    private GET_VALIDED = 'SELECT * FROM witness JOIN user ON user_id = user.id WHERE status=1;';
 
-        const result = await this.db.query(this.GET_ALL);
+    async getValidated(status: number) {
+        const searchStatus = status ;
+        const result = await this.db.query(this.GET_VALIDED, [searchStatus, searchStatus]);
         return result;
-    }
-    async findValided() {
-        const result = await this.db.query(this.GET_VALIDED);
-        return result;
-    }
-
-    async findById(id: number) {
-        const witness = await this.db.query(this.GET_BY_ID , id);
-        return witness;
-    }
-
-    async save(witness: Witness) {
-        const postWitness = await this.db.query(this.POST_BY_ID, witness);
-        return postWitness;
-    }
-
-    async modifyWitness(witness: Witness, id: number) {
-        const modifyWitness = await this.db.query(this.PUT_BY_ID, [witness, id]);
-        return modifyWitness;
-    }
-
-    async deleteWitness(id: number) {
-        const deleteWitness = await this.db.query(this.DEL_BY_ID , id);
-        return deleteWitness;
     }
 }

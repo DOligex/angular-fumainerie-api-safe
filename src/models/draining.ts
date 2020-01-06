@@ -8,18 +8,17 @@ export class Draining {
     public createAt!: string;
     public updateAt!: string;
     public deleteAt!: string;
-    public type!: string;
-    public address!: string;
-    public address_plus!: string;
-    public zip!: number;
-    public city!: string;
-    public emptying_story!: string;
-    public startAt!: string;
-    public people!: string;
-    public adult_nbr!: number;
-    public child_nbr!: number;
-    public rapport!: string;
+    public validationAt!: string;
+    public cancellationAt!: string;
+    public site_arrival_time!: string;
+    public site_leave_time!: string;
+    public check_date!: string;
+    public comments!: string;
+    public weight!: string;
+    public sawdust_delivery!: string;
+    public sawdust_weight!: string;
     public user_id!: number;
+    public home_id!: number;
 
     constructor(input: Draining) {
         Object.assign(this, input);

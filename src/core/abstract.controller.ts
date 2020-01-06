@@ -3,7 +3,7 @@ import { AbstractService } from './abstract.service';
 import jwt from 'express-jwt';
 
 export abstract class AbstractController<T> {
-    protected abstract route: string;
+    // protected abstract route: string;
     protected abstract service: AbstractService<T>;
 
     constructor(path: string, app: Application) {
@@ -23,7 +23,7 @@ export abstract class AbstractController<T> {
             routeur = finalRouter;
         }
 
-        // Assigniation des routes au path
+        // Assignation des routes au path
         app.use('/' + path, routeur);
     }
 
@@ -42,7 +42,7 @@ export abstract class AbstractController<T> {
                 const result = await this.service.getById(id);
                 res.send(result);
             } catch (error) {
-                res.status(404).send('L\'id n\'a pas été trouvé' + id);
+                res.status(404).send('L\'id ' + id + 'n\'a pas été trouvé');
             }
         });
 

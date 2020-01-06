@@ -1,16 +1,15 @@
-import { User } from '../models/user';
-import { UserService } from './../services/user.service';
+import { News } from '../models/news';
+import { NewsService } from '../services/news.service';
 import express, { Application } from 'express';
 import { AbstractController } from '../core/abstract.controller';
 
-export class UserController extends AbstractController<User> {
+export class NewsController extends AbstractController<News> {
     protected route!: string;
-    service = new UserService();
+    service = new NewsService();
 
     constructor(app: Application) {
-        super('user', app );
+        super('news', app);
     }
-
     protected setupAdditionalRoute(router: express.Router): void | express.Router {
 
         router.get('/specificroute', (req, res) => {
@@ -19,4 +18,5 @@ export class UserController extends AbstractController<User> {
 
         return router;
                 }
+
 }

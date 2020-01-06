@@ -33,6 +33,7 @@ export class AuthService {
         if (!process.env.WILD_JWT_SECRET) {
             throw new Error('Server is not correctly configured');
         }
+
         const token = sign (payload, process.env.WILD_JWT_SECRET as string);
 
         return token;

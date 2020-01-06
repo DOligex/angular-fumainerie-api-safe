@@ -1,28 +1,18 @@
-import { DbHandler } from './db.handler';
+import { User } from './../models/user';
+import { DrainingRequest } from './../models/draining-request';
+import { AbstractRepository } from '../core/abstract.repository';
 
-export class DrainingRequestRepository {
-
-    private GET_ALL = 'SELECT * FROM draining_request;';
-    private GET_BY_ID = 'SELECT * FROM draining_request where id = ?';
-
-    private db: DbHandler;
+export class DrainingRequestRepository extends AbstractRepository<DrainingRequest> {
 
     constructor() {
-        this.db =  DbHandler.getInstance();
-
+        super('draining_request');
     }
 
-    async findAll() {
-        const result = await this.db.query(this.GET_ALL);
+    private GET_DRAINING_REQUEST_BY_USER_ID = 'SELECT * FROM draining_request WHERE id = ? AND status = 0 ';
+
+    async getByUserId(data: User) {
+        const userId = data.id;
+        const result = await this.db.query(this.GET_DRAINING_REQUEST_BY_USER_ID, [userId]);
         return result;
-    }
-
-    async findById(id: number) {
-        const drainingRequest = await this.db.query(this.GET_BY_ID + id);
-        return drainingRequest;
-    }
-
-    save(drainingRequest: any) {
-        // votre code ici
     }
 }

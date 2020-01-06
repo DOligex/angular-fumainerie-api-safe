@@ -15,7 +15,7 @@ export abstract class AbstractRepository<T> {
         this.GET_ALL = `SELECT * FROM ${tablename} ;`;
         this.GET_BY_ID = `SELECT * FROM ${tablename} WHERE id = ? ;`;
         this.PUT_BY_ID = `UPDATE ${tablename} SET ? WHERE id = ? ;`;
-        this.DEL_BY_ID = `DELETE FROM ${tablename} WHERE ? ;`;
+        this.DEL_BY_ID = `DELETE FROM ${tablename} WHERE id = ? ;`;
         this.POST_BY_ID = `INSERT INTO ${tablename} SET ? ;`;
     }
 
