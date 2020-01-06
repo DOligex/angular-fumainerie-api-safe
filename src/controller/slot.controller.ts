@@ -1,6 +1,6 @@
 import { SlotService } from '../services/slot.service';
 import { Application } from 'express';
-import { commonController } from 'src/core/common.controller';
+import { commonController } from '../core/common.controller';
 
 // Le controller vous servira à réceptionner les requêtes associées aux créneaux d'interventions proposés
 // @param app l'application express

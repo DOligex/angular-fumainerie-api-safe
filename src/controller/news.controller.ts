@@ -1,6 +1,6 @@
 import { NewsService } from '../services/news.service';
 import { Application } from 'express';
-import { commonController } from 'src/core/common.controller';
+import { commonController } from '../core/common.controller';
 
 // Le controller vous servira à réceptionner les requêtes associées aux actualités
 // @param app l'application express

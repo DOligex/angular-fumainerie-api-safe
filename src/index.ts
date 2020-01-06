@@ -21,16 +21,16 @@ async function startServer() {
     await loaders(app);
 
     // Ajout des différentes route de votre application
-    const doc = new DocumentController(app);
-    const drain = new DrainingController(app);
-    const drainingRequest = new DrainingRequestController(app);
-    const event = new EventController(app);
-    const home = new HomeController(app);
-    const occupant = new OccupantController(app);
-    const question = new QuestionController(app);
-    const slot = new SlotController(app);
-    const use = new UserController(app);
-    const witness = new WitnessController(app);
+    DocumentController(app);
+    DrainingController(app);
+    DrainingRequestController(app);
+    EventController(app);
+    HomeController(app);
+    OccupantController(app);
+    QuestionController(app);
+    SlotController(app);
+    UserController(app);
+    WitnessController(app);
     AuthController(app);
 
     // Démarrage du serveur une fois que tout est correctement init
