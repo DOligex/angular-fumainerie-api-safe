@@ -22,6 +22,17 @@ export const AuthController = (app: Application) => {
 
         }
     });
+    authRouter.post('/signin', async (req: Request, res: Response) => {
+        const user = req.body;
+        try {
+            await authService.signIn();
+            res.send(user);
+
+        } catch (error) {
+            res.status(409).send('Connexion impossible');
+
+        }
+    });
 
     app.use('/auth', authRouter);
 };
