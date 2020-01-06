@@ -19,5 +19,6 @@ export class UserRepository extends AbstractRepository<User> {
     async findByEmail(email: string) {
         const users = await (this.db.query(this.GET_BY_EMAIL, email) as Promise<User[]>);
         return users[0] || null;
+
     }
 }

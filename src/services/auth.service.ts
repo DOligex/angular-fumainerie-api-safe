@@ -11,10 +11,14 @@ export class AuthService {
     }
 
     async signUp(user: User) {
-
+        const userEmail = await this.repository.findByEmail(user.email);
+        if (userEmail == null || undefined) {
         user.password = await hash(user.password);
         const all = await this.repository.save(user);
         return all;
+        } else {
+            throw new Error('Mail already used');
+        }
     }
 
     async signIn(email: string, password: string) {
@@ -29,7 +33,7 @@ export class AuthService {
             throw error;
         }
 
-        const payload = {id: user.id, email: user.email, firstname: user.firstname};
+        const payload = {id: user.id, email: user.email, firstname: user.firstname, accountStatus: user.account_status};
         if (!process.env.WILD_JWT_SECRET) {
             throw new Error('Server is not correctly configured');
         }
