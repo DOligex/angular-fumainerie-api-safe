@@ -1,22 +1,15 @@
 import { DrainingRequestService } from './../services/draining_request.service';
-import { DrainingRequest } from '../models/draining-request';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application } from 'express';
+import { commonController } from 'src/core/common.controller';
 
-// Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
+// Le controller vous servira à réceptionner les requêtes associées aux demandes de vidanges
 // @param app l'application express
 
-export class DrainingRequestController extends AbstractController<DrainingRequest> {
-    protected route!: string;
-    service = new DrainingRequestService();
+export const DrainingRequestController = (app: Application) => {
+    const service = new DrainingRequestService();
+    const router = commonController(app, service);
 
-    constructor(app: Application) {
-        super('drainingRequest', app );
-    }
-
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
-        // route spécifique à décrire ci-dessous
-        router.get('/user/:id', async (req, res) => {
+    router.get('/user/:id', async (req, res) => {
             const userId = parseInt(req.params.id, 10);
             try {
                 const result = await this.service.getRequestDrainingByUserId(userId);
@@ -24,9 +17,7 @@ export class DrainingRequestController extends AbstractController<DrainingReques
             } catch (error) {
                 res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
             }
+    });
 
-        });
-
-        return router;
-    }
-}
+    app.use('/drainingRequest', router);
+};

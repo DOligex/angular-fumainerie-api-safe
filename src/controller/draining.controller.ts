@@ -1,26 +1,17 @@
-
-import { Draining } from '../models/draining';
 import { DrainingService } from '../services/draining.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application } from 'express';
+import { commonController } from 'src/core/common.controller';
 
-// Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
+// Le controller vous servira à réceptionner les requetes associées aux vidanges
 // @param app l'application express
 
-export class DrainingController extends AbstractController<Draining> {
-    protected route!: string;
-    service = new DrainingService();
+export const DrainingController = (app: Application) => {
+    const service = new DrainingService();
+    const router = commonController(app, service);
 
-    constructor(app: Application) {
-        super('draining', app );
-    }
+    router.get('/specificroute', (req, res) => {
+        res.send('totot');
+    });
 
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
-        // route spécifique à décrire ci-dessous
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
-
-        return router;
-                }
-}
+    app.use('/draining', router);
+};
