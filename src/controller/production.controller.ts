@@ -7,7 +7,6 @@ import { commonController } from 'src/core/common.controller';
 
 export const ProductionController = (app: Application) => {
     const service = new ProductionService();
-
     const router = commonController(app, service);
 
     router.get('/specificroute', (req, res) => {
