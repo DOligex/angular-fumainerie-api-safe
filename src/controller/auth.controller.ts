@@ -1,3 +1,4 @@
+import { User } from './../models/user';
 import { AuthService } from '../services/auth.service';
 import express, { Router, Request, Response, Application } from 'express';
 
@@ -23,9 +24,9 @@ export const AuthController = (app: Application) => {
         }
     });
     authRouter.post('/signin', async (req: Request, res: Response) => {
-        const user = req.body;
+        const user: User = req.body ;
         try {
-            await authService.signIn();
+            await authService.signIn(user.email, user.password);
             res.send(user);
 
         } catch (error) {
