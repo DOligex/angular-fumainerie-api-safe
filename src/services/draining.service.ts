@@ -6,9 +6,9 @@ export class DrainingService extends AbstractService<Draining> {
 
     repository = new DrainingRepository();
 
-    async getBySearch(word: string) {
-        const search = await this.repository.searchDraining(word);
-        return search;
-    }
+    // async getBySearch(word: string) {
+    //     const search = await this.repository.searchDraining(word);
+    //     return search;
+    // }
 
 }
