@@ -1,3 +1,4 @@
+import { SlotController } from './controller/slot.controller';
 import { AuthController } from './controller/auth.controller';
 import express from 'express';
 import loaders from './loaders';
@@ -11,7 +12,6 @@ import { DrainingController } from './controller/draining.controller';
 import { QuestionController } from './controller/question.controller';
 import { DrainingRequestController } from './controller/draining-request.controller';
 import { OccupantController } from './controller/occupant.controller';
-import { SlotController } from './controller/slot.controller';
 
 async function startServer() {
     // Récupération de l'application initiale
@@ -34,6 +34,7 @@ async function startServer() {
     AuthController(app);
 
     // Démarrage du serveur une fois que tout est correctement init
+    // tslint:disable-next-line: no-console
     app.listen(3000, () => console.log('Express server is running'));
   }
 
