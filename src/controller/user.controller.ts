@@ -1,6 +1,6 @@
 import { UserService } from './../services/user.service';
 import { Application } from 'express';
-import { commonController } from 'src/core/common.controller';
+import { commonController } from '../core/common.controller';
 
 // Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
 // @param app l'application express

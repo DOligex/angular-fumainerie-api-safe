@@ -1,6 +1,6 @@
 import { DrainingService } from '../services/draining.service';
 import { Application } from 'express';
-import { commonController } from 'src/core/common.controller';
+import { commonController } from '../core/common.controller';
 
 // Le controller vous servira à réceptionner les requetes associées aux vidanges
 // @param app l'application express
