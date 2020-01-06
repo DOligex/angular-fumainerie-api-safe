@@ -16,6 +16,7 @@ export class QuestionRepository extends AbstractRepository<Question> {
         const result = await this.db.query(this.GET_ASK_BY_SEARCH, [searchWord, searchWord]);
         return result;
     }
+  
     async searchQuestionStatus(word: string) {
         const searchWord = '%' + word + '%';
         const result = await this.db.query(this.GET_ASK_BY_TRAITED, [searchWord, searchWord]);

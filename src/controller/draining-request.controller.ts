@@ -1,6 +1,5 @@
-
+import { DrainingRequestService } from './../services/draining_request.service';
 import { DrainingRequest } from '../models/draining-request';
-import { DrainingRequestService } from '../services/draining_request.service';
 import express, { Application } from 'express';
 import { AbstractController } from '../core/abstract.controller';
 
@@ -12,15 +11,15 @@ export class DrainingRequestController extends AbstractController<DrainingReques
     service = new DrainingRequestService();
 
     constructor(app: Application) {
-        super('draining', app );
+        super('drainingRequest', app );
     }
 
     protected setupAdditionalRoute(router: express.Router): void | express.Router {
         // route spécifique à décrire ci-dessous
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
+        router.get('/drainingRequestByUserId', (req, res) => {
+            res.send('ok');
         });
 
         return router;
-                }
+    }
 }
