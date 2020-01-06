@@ -16,10 +16,15 @@ export class DrainingRequestController extends AbstractController<DrainingReques
 
     protected setupAdditionalRoute(router: express.Router): void | express.Router {
         // route spécifique à décrire ci-dessous
-        router.get('/user/:id', (req, res) => {
-            const id = parseInt(req.params.id, 10);
-            this.service.getRequestDrainingByUserId(id);
-            res.send('ok');
+        router.get('/user/:id', async (req, res) => {
+            const userId = parseInt(req.params.id, 10);
+            try {
+                const result = await this.service.getRequestDrainingByUserId(userId);
+                res.send(result);
+            } catch (error) {
+                res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
+            }
+
         });
 
         return router;
