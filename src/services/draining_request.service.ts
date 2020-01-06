@@ -7,7 +7,7 @@ export class DrainingRequestService extends AbstractService<DrainingRequest> {
 
     repository = new DrainingRequestRepository();
 
-    async getRequestDrainingByUserId(data: User) {
+    async getRequestDrainingByUserId(data: number) {
         return await this.repository.getByUserId(data);
     }
     }

@@ -16,7 +16,9 @@ export class DrainingRequestController extends AbstractController<DrainingReques
 
     protected setupAdditionalRoute(router: express.Router): void | express.Router {
         // route spécifique à décrire ci-dessous
-        router.get('/drainingRequestByUserId', (req, res) => {
+        router.get('/user/:id', (req, res) => {
+            const id = parseInt(req.params.id, 10);
+            this.service.getRequestDrainingByUserId(id);
             res.send('ok');
         });
 
