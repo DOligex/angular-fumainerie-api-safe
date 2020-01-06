@@ -1,7 +1,5 @@
-import { Document } from './../models/document';
 import { DocumentService } from './../services/document.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application } from 'express';
 import { commonController } from '../core/common.controller';
 
 // Le controller vous servira à réceptionner les requêtes associées aux utilisateurs

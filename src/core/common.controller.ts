@@ -1,5 +1,4 @@
 import { Application, Router, Request, Response } from 'express';
-import express from '../loaders/express';
 import { AbstractService } from './abstract.service';
 import jwt = require('express-jwt');
 
