@@ -7,6 +7,7 @@ export class UserRepository extends AbstractRepository<User> {
 
     constructor() {
         super('user');
+
     }
 
     //     async findByEmail(email: string) {

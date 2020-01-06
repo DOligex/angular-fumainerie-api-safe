@@ -1,3 +1,4 @@
+import { commonController } from './../core/common.controller';
 import { AuthService } from '../services/auth.service';
 import express, { Router, Request, Response, Application } from 'express';
 
@@ -7,9 +8,9 @@ import express, { Router, Request, Response, Application } from 'express';
  * @param app l'application express
  */
 export const AuthController = (app: Application) => {
-
-    const authRouter: Router = express.Router();
     const authService = new AuthService();
+
+    const authRouter = commonController(app, authService);
 
     authRouter.post('/signup', async (req: Request, res: Response) => {
         const user = req.body;
