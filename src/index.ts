@@ -12,7 +12,6 @@ import { DrainingController } from './controller/draining.controller';
 import { QuestionController } from './controller/question.controller';
 import { DrainingRequestController } from './controller/draining-request.controller';
 import { OccupantController } from './controller/occupant.controller';
-import { SlotController } from './controller/slot.controller';
 
 async function startServer() {
     // Récupération de l'application initiale
@@ -33,13 +32,9 @@ async function startServer() {
     const use = new UserController(app);
     const witness = new WitnessController(app);
     AuthController(app);
-<<<<<<< HEAD
-    QuestionController(app);
-    SlotController(app);
-=======
->>>>>>> d78e64f945dbfbdc3eddb14747dc0dc92a26f6de
 
     // Démarrage du serveur une fois que tout est correctement init
+    // tslint:disable-next-line: no-console
     app.listen(3000, () => console.log('Express server is running'));
   }
 
