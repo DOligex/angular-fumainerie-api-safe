@@ -12,12 +12,12 @@ export class AuthService {
 
     async signUp(user: User) {
         const userEmail = await this.repository.findByEmail(user.email);
-        if (userEmail == null || undefined) {
-        user.password = await hash(user.password);
-        const all = await this.repository.save(user);
-        return all;
-        } else {
+        if (userEmail) {
             throw new Error('Mail already used');
+        } else {
+            user.password = await hash(user.password);
+            const all = await this.repository.save(user);
+            return all;
         }
     }
 

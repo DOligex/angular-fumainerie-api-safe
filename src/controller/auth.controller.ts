@@ -20,7 +20,6 @@ export const AuthController = (app: Application) => {
 
         } catch (error) {
             res.status(409).send('Email déjà existant');
-
         }
     });
     authRouter.post('/signin', async (req: Request, res: Response) => {
