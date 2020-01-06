@@ -1,22 +1,17 @@
-import { Event } from '../models/event';
+import { Application } from 'express';
+import { commonController } from '../core/common.controller';
 import { EventService } from './../services/event.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
 
-export class EventController extends AbstractController<Event> {
-    protected route!: string;
-    service = new EventService();
+// Le controller vous servira à réceptionner les requêtes associées aux évenements
+// @param app l'application express
 
-    constructor(app: Application) {
-        super('event', app);
-    }
-    // déclaration d'une requete spécifique :
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
+export const EventController = (app: Application) => {
+    const service = new EventService();
+    const router = commonController(app, service);
 
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
+    router.get('/specificroute', (req, res) => {
+        res.send('totot');
+    });
 
-        return router;
-                }
-}
+    app.use('/event', router);
+};

@@ -1,23 +1,17 @@
-import { Slot } from '../models/slot';
 import { SlotService } from '../services/slot.service';
-import express, {  Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application } from 'express';
+import { commonController } from 'src/core/common.controller';
 
-export class SlotController extends AbstractController<Slot> {
-    protected route!: string;
-    service = new SlotService();
+// Le controller vous servira à réceptionner les requêtes associées aux créneaux d'interventions proposés
+// @param app l'application express
 
-    constructor(app: Application) {
-        super('slot', app);
-    }
+export const SlotController = (app: Application) => {
+    const service = new SlotService();
+    const router = commonController(app, service);
 
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
+    router.get('/specificroute', (req, res) => {
+        res.send('totot');
+    });
 
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
-
-        return router;
-                }
-
-}
+    app.use('/slot', router);
+};

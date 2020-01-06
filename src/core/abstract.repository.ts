@@ -1,10 +1,9 @@
 import { DbHandler } from './../repository/db.handler';
 
 export abstract class AbstractRepository<T> {
-
     protected db: DbHandler;
     private GET_ALL: string;
-    private GET_BY_ID: string;
+    protected GET_BY_ID: string;
 
     private PUT_BY_ID = 'UPDATE ';
     private DEL_BY_ID = 'DELETE FROM ';

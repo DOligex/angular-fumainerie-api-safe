@@ -1,23 +1,17 @@
-
-import { Production } from '../models/production';
 import { ProductionService } from '../services/production.service';
-import { AbstractController } from '../core/abstract.controller';
-import express, { Application } from 'express';
+import { Application } from 'express';
+import { commonController } from 'src/core/common.controller';
 
-export class ProductionController extends AbstractController<Production> {
-    protected route!: string;
-    service = new ProductionService();
+// Le controller vous servira à réceptionner les requêtes associées aux productions d'un foyer
+// @param app l'application express
 
-    constructor(app: Application) {
-        super('production', app );
-    }
+export const ProductionController = (app: Application) => {
+    const service = new ProductionService();
+    const router = commonController(app, service);
 
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
+    router.get('/specificroute', (req, res) => {
+        res.send('totot');
+    });
 
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
-
-        return router;
-                }
-}
+    app.use('/production', router);
+};
