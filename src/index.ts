@@ -1,3 +1,4 @@
+import { NewsController } from './controller/news.controller';
 import { SlotController } from './controller/slot.controller';
 import { AuthController } from './controller/auth.controller';
 import express from 'express';
@@ -32,6 +33,7 @@ async function startServer() {
     UserController(app);
     WitnessController(app);
     AuthController(app);
+    NewsController(app);
 
     // Démarrage du serveur une fois que tout est correctement init
     // tslint:disable-next-line: no-console
