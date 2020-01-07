@@ -10,8 +10,7 @@ export class WitnessRepository extends AbstractRepository<Witness> {
     private GET_VALIDED = 'SELECT * FROM witness JOIN user ON user_id = user.id WHERE status=1;';
 
     async getValidated(status: number) {
-        const searchStatus = status ;
-        const result = await this.db.query(this.GET_VALIDED, [searchStatus, searchStatus]);
+        const result = await this.db.query(this.GET_VALIDED, [this.GET_VALIDED]);
         return result;
     }
 }
