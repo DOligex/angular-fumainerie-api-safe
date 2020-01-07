@@ -2,9 +2,7 @@ import { Application, Router, Request, Response } from 'express';
 import { AbstractService } from './abstract.service';
 import jwt = require('express-jwt');
 
-export const commonController = (app: Application, service: AbstractService<any>) => {
-
-    const abstractRouter: Router = Router();
+export const commonController = (app: Application, service: AbstractService<any>, abstractRouter = Router()) => {
 
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
