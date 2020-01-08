@@ -1,6 +1,4 @@
-import { NewsController } from './controller/news.controller';
-import { SlotController } from './controller/slot.controller';
-import { AuthController } from './controller/auth.controller';
+
 import express from 'express';
 import loaders from './loaders';
 
@@ -13,11 +11,14 @@ import { DrainingController } from './controller/draining.controller';
 import { QuestionController } from './controller/question.controller';
 import { DrainingRequestController } from './controller/draining-request.controller';
 import { OccupantController } from './controller/occupant.controller';
+import { NewsController } from './controller/news.controller';
+import { SlotController } from './controller/slot.controller';
+import { AuthController } from './controller/auth.controller';
+import { NewsletterController} from './controller/newsletter.controller';
 
 async function startServer() {
     // Récupération de l'application initiale
     const app = express();
-
     // Chargement des différents loader
     await loaders(app);
 
@@ -34,6 +35,7 @@ async function startServer() {
     WitnessController(app);
     AuthController(app);
     NewsController(app);
+    NewsletterController(app);
 
     // Démarrage du serveur une fois que tout est correctement init
     // tslint:disable-next-line: no-console
