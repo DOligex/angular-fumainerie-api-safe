@@ -17,12 +17,10 @@ export class AuthService {
         if (userEmail == null || undefined) {
         user.password = await hash(user.password);
 
-        randomBytes(12).toString('hex');
-
         const all = await this.repository.save(user);
 
-        const userId = all.id;
-
+        const token = randomBytes(12).toString('hex');
+        await this.nodemailer(token, all);
         return all;
         } else {
             throw new Error('Mail already used');
