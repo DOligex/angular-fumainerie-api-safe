@@ -21,7 +21,7 @@ export const commonController = (app: Application, service: AbstractService<any>
             const result = await service.getById(id);
             res.send(result);
         } catch (error) {
-            res.status(404).send('L\'id ' + id + 'n\'a pas été trouvé');
+            res.status(404).send('coucou');
         }
     });
 

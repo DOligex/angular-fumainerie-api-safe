@@ -1,4 +1,4 @@
-import { Application } from 'express';
+import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 import { EventService } from './../services/event.service';
 
@@ -7,11 +7,18 @@ import { EventService } from './../services/event.service';
 
 export const EventController = (app: Application) => {
     const service = new EventService();
-    const router = commonController(app, service);
+    let router = Router();
 
-    router.get('/specificroute', (req, res) => {
-        res.send('totot');
+    router.get('/date', async (req, res) => {
+        try {
+            const result = await service.getByDate();
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('Les évenements n\'ont pas été trouvé');
+        }
     });
+
+    router = commonController(app, service, router);
 
     app.use('/event', router);
 };

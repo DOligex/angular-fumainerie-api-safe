@@ -4,7 +4,11 @@ import { AbstractService } from '../core/abstract.service';
 
 export class WitnessService extends AbstractService<Witness> {
 
-    // Un singeleton est une class ayant une instance unique a travers toute l'app
     repository = new WitnessRepository();
+
+    async getValide() {
+        const search = await this.repository.getValidated(1);
+        return search;
+    }
 
 }

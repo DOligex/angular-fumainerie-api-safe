@@ -21,6 +21,7 @@ export class AuthService {
 
     async signUp(user: User) {
         const userEmail = await this.repository.findByEmail(user.email);
+
         if (userEmail == null || undefined) {
             user.password = await hash(user.password);
 
@@ -61,21 +62,12 @@ export class AuthService {
     }
 
     async confirmation(tokenStr: string) {
-<<<<<<< HEAD
-        console.log(tokenStr);
-        const token = await this.tokenService.getByValue(tokenStr);
-        console.log('Je suis le token' + token);
-        console.log(token[0]);
-        if (!token) {
-           throw new Error('Dans confirmation Lien invalide');
-=======
+
        const token: any = await this.tokenService.getByValue(tokenStr);
 
        if (!token) {
            throw new Error('Lien invalide');
->>>>>>> f869e13b384b89d7a7ad942b6651dc4fa169764f
        }
-        console.log(token.user_id);
         await this.userService.updateUser(token.user_id);
     }
 
@@ -101,12 +93,7 @@ export class AuthService {
         to: user.email, // list of receivers
         subject: 'Activation link', // Subject line
         html: `
-        <a href="http://localhost:3000/auth/confirmation/${token}">Activation link</a>
-
-
-        <a href="http://goole.com">Google</a>
-        
-        `, // html body
+        <a href="http://localhost:3000/auth/confirmation/${token}">Activation link</a>, // html body
     });
 
     console.log('Message sent: %s', info.messageId);

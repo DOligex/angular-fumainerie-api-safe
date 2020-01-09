@@ -7,13 +7,12 @@ export class EventRepository extends AbstractRepository<Event> {
         super('event');
     }
 
-    // Recherche des événements avec barre de recherche
-    // private GET_EVENT_BY_SEARCH = 'SELECT * FROM event WHERE author LIKE ? OR description LIKE ?' ;
+    // Recherche des événements dont la date est suppérieure au à aujourd'hui
+    private GET_EVENT_BY_DATE_SUP_NOW = 'SELECT * FROM event WHERE date > CURDATE() ORDER BY date' ;
 
-    // async searchEvent(word: string) {
-    //     const searchWord = '%' + word + '%';
-    //     const result = await this.db.query(this.GET_EVENT_BY_SEARCH, [searchWord, searchWord]);
-    //     return result;
-    // }
+    async getEventByDate() {
+        const result = await this.db.query(this.GET_EVENT_BY_DATE_SUP_NOW);
+        return result;
+    }
 
 }
