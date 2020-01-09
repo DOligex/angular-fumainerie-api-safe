@@ -58,7 +58,8 @@ export class AuthService {
     }
 
     async confirmation(tokenStr: string) {
-       const token = await this.tokenService.getByValue(tokenStr);
+       const token: any = await this.tokenService.getByValue(tokenStr);
+
        if (!token) {
            throw new Error('Lien invalide');
        }

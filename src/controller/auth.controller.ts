@@ -3,6 +3,7 @@ import { commonController } from './../core/common.controller';
 import { AuthService } from '../services/auth.service';
 import express, { Router, Request, Response, Application } from 'express';
 import { User } from 'src/models/user';
+import { read } from 'fs';
 
 /**
  * Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
@@ -37,12 +38,13 @@ export const AuthController = (app: Application) => {
     });
     authRouter.get('/confirmation/:token', async (req: Request, res: Response) => {
         const tokenStr = req.params.token;
+        res.sendStatus(204);
         try {
-            await authService.signIn(user.email, user.password);
-            res.send(user);
+            await authService.confirmation(tokenStr);
+            res.send('token confirmé');
 
         } catch (error) {
-            res.status(409).send('Connexion impossible');
+            res.status(409).send('Token invalide');
 
         }
     });
