@@ -19,6 +19,9 @@ export class Draining {
     public sawdust_weight!: string;
     public user_id!: number;
     public home_id!: number;
+    public session_date!: string;
+    public draining_id!: number;
+    public slot_id!: number;
 
     constructor(input: Draining) {
         Object.assign(this, input);
