@@ -59,7 +59,7 @@ export class AuthService {
             throw new Error('Server is not correctly configured');
         }
 
-        const token = sign (payload, process.env.WILD_JWT_SECRET as string);
+        const token = sign(payload, process.env.WILD_JWT_SECRET as string);
 
         return token;
     }
@@ -107,4 +107,4 @@ export class AuthService {
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
     }
 
-};
+}
