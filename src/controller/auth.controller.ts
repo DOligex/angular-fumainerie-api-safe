@@ -25,17 +25,18 @@ export const AuthController = (app: Application) => {
             res.status(409).send('Email déjà existant');
         }
     });
+
     authRouter.post('/signin', async (req: Request, res: Response) => {
         const user: User = req.body ;
         try {
-            await authService.signIn(user.email, user.password);
-            res.send(user);
-
+            const token = await authService.signIn(user.email, user.password);
+            res.send(token);
         } catch (error) {
             res.status(409).send('Connexion impossible');
 
         }
     });
+
     authRouter.get('/confirmation/:token', async (req: Request, res: Response) => {
         const tokenStr = req.params.token;
 

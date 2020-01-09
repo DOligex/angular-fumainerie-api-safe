@@ -25,6 +25,8 @@ export class AuthService {
         if (userEmail == null || undefined) {
             user.password = await hash(user.password);
 
+            randomBytes(12).toString('hex');
+
             const all = await this.repository.save(user);
 
             const tokenString = randomBytes(12).toString('hex');
@@ -57,7 +59,7 @@ export class AuthService {
             throw new Error('Server is not correctly configured');
         }
 
-        const token = sign (payload, process.env.WILD_JWT_SECRET as string);
+        const token = sign(payload, process.env.WILD_JWT_SECRET as string);
 
         return token;
     }

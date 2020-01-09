@@ -9,9 +9,7 @@ export class TokenRepository extends AbstractRepository<Token> {
     }
 
     async getValue(str: string) {
-        const result = await this.db.query(this.GET_BY_ID_TOKEN, str);
-        console.log(result);
-        console.log(result[0]);
+        const result: any = await this.db.query(this.GET_BY_ID_TOKEN, str);
         return result[0];
     }
 
