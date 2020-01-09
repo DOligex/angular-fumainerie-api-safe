@@ -3,6 +3,7 @@ import { commonController } from './../core/common.controller';
 import { AuthService } from '../services/auth.service';
 import express, { Router, Request, Response, Application } from 'express';
 import { User } from 'src/models/user';
+import { read } from 'fs';
 
 /**
  * Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
@@ -18,7 +19,7 @@ export const AuthController = (app: Application) => {
         const user = req.body;
         try {
             await authService.signUp(user);
-            res.send(user);
+            res.send('Record Ok');
 
         } catch (error) {
             res.status(409).send('Email déjà existant');
@@ -32,6 +33,18 @@ export const AuthController = (app: Application) => {
 
         } catch (error) {
             res.status(409).send('Connexion impossible');
+
+        }
+    });
+    authRouter.get('/confirmation/:token', async (req: Request, res: Response) => {
+        const tokenStr = req.params.token;
+
+        try {
+            await authService.confirmation(tokenStr);
+            res.redirect('http://localhost:4200/connexion');
+
+        } catch (error) {
+            res.status(400).send('Lien invalide');
 
         }
     });

@@ -1,6 +1,6 @@
 export class Token {
 
-    public id!: number;
+    public id?: number;
     public value!: string;
     public user_id!: number;
 

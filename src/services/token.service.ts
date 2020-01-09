@@ -6,9 +6,12 @@ export class TokenService extends AbstractService<Token> {
 
     repository = new TokenRepository();
 
-    async getDrainingByUserId(userId: number) {
-        const drainings = await this.repository.getDraining(userId);
-        return drainings;
+    async create(token: Token) {
+        return await this.repository.save(token);
+    }
+
+    async getByValue(value: string) {
+        return await this.repository.getValue(value);
     }
 
 }
