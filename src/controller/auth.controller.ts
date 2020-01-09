@@ -28,7 +28,6 @@ export const AuthController = (app: Application) => {
         const user: User = req.body ;
         try {
             await authService.signIn(user.email, user.password);
-            res.send(user);
 
         } catch (error) {
             res.status(409).send('Connexion impossible');

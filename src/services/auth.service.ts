@@ -2,6 +2,7 @@ import { UserRepository } from '../repository/user.repository';
 import { User } from '../models/user';
 import { hash, verify } from 'argon2';
 import { sign } from 'jsonwebtoken';
+import { randomBytes } from 'crypto';
 
 export class AuthService {
 
@@ -16,6 +17,9 @@ export class AuthService {
             throw new Error('Mail already used');
         } else {
             user.password = await hash(user.password);
+
+            randomBytes(12).toString('hex');
+
             const all = await this.repository.save(user);
             return all;
         }
