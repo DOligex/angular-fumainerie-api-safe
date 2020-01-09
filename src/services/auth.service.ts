@@ -94,7 +94,7 @@ export class AuthService {
         to: user.email, // list of receivers
         subject: 'Activation link', // Subject line
         html: `
-        <a href="http://localhost:3000/auth/confirmation/${token}">Activation link</a>, // html body
+        <a href="http://localhost:3000/auth/confirmation/${token}">Activation link</a>`, // html body
     });
 
     console.log('Message sent: %s', info.messageId);
