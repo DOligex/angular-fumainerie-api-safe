@@ -18,7 +18,6 @@ export const AuthController = (app: Application) => {
         const user = req.body;
         try {
             await authService.signUp(user);
-            // Changer user car il renvoi le mot de passe
             res.send('Record Ok');
 
         } catch (error) {
@@ -27,6 +26,17 @@ export const AuthController = (app: Application) => {
     });
     authRouter.post('/signin', async (req: Request, res: Response) => {
         const user: User = req.body ;
+        try {
+            await authService.signIn(user.email, user.password);
+            res.send(user);
+
+        } catch (error) {
+            res.status(409).send('Connexion impossible');
+
+        }
+    });
+    authRouter.get('/confirmation/:token', async (req: Request, res: Response) => {
+        const tokenStr = req.params.token;
         try {
             await authService.signIn(user.email, user.password);
             res.send(user);
