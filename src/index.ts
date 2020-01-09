@@ -1,5 +1,3 @@
-import { SlotController } from './controller/slot.controller';
-import { AuthController } from './controller/auth.controller';
 import express from 'express';
 import loaders from './loaders';
 
@@ -12,26 +10,31 @@ import { DrainingController } from './controller/draining.controller';
 import { QuestionController } from './controller/question.controller';
 import { DrainingRequestController } from './controller/draining-request.controller';
 import { OccupantController } from './controller/occupant.controller';
+import { NewsController } from './controller/news.controller';
+import { SlotController } from './controller/slot.controller';
+import { AuthController } from './controller/auth.controller';
+import { NewsletterController} from './controller/newsletter.controller';
 
 async function startServer() {
     // Récupération de l'application initiale
     const app = express();
-
     // Chargement des différents loader
     await loaders(app);
 
     // Ajout des différentes route de votre application
-    const doc = new DocumentController(app);
-    const drain = new DrainingController(app);
-    const drainingRequest = new DrainingRequestController(app);
-    const event = new EventController(app);
-    const home = new HomeController(app);
-    const occupant = new OccupantController(app);
-    const question = new QuestionController(app);
-    const slot = new SlotController(app);
-    const use = new UserController(app);
-    const witness = new WitnessController(app);
+    DocumentController(app);
+    DrainingController(app);
+    DrainingRequestController(app);
+    EventController(app);
+    HomeController(app);
+    OccupantController(app);
+    QuestionController(app);
+    SlotController(app);
+    UserController(app);
+    WitnessController(app);
     AuthController(app);
+    NewsController(app);
+    NewsletterController(app);
 
     // Démarrage du serveur une fois que tout est correctement init
     // tslint:disable-next-line: no-console

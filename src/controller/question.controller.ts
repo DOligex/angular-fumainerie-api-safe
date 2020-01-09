@@ -1,23 +1,17 @@
-
-import { Question } from '../models/question';
 import { QuestionService } from '../services/question.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application } from 'express';
+import { commonController } from '../core/common.controller';
 
-export class QuestionController extends AbstractController<Question> {
-    protected route!: string;
-    service = new QuestionService();
+// Le controller vous servira à réceptionner les requêtes associées aux questions posées à la fumainerie
+// @param app l'application express
 
-    constructor(app: Application) {
-        super('question', app );
-    }
+export const QuestionController = (app: Application) => {
+    const service = new QuestionService();
+    const router = commonController(app, service);
 
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
+    router.get('/specificroute', (req, res) => {
+        res.send('totot');
+    });
 
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
-
-        return router;
-                }
-}
+    app.use('/question', router);
+};

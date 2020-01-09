@@ -15,6 +15,7 @@ export default async () => {
 
   connexion.connect((err) => {
     if (err) { throw err; }
+    // tslint:disable-next-line: no-console
     console.log('Connected!');
   });
 

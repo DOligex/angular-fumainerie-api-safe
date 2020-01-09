@@ -1,25 +1,17 @@
-import { Occupant } from '../models/occupant';
 import { OccupantService } from '../services/occupant.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application } from 'express';
+import { commonController } from '../core/common.controller';
 
-// Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
+// Le controller vous servira à réceptionner les requêtes associées aux occupants d'un foyer
 // @param app l'application express
 
-export class OccupantController extends AbstractController<Occupant> {
-    protected route!: string;
-    service = new OccupantService();
+export const OccupantController = (app: Application) => {
+    const service = new OccupantService();
+    const router = commonController(app, service);
 
-    constructor(app: Application) {
-        super('occupant', app );
-    }
+    router.get('/specificroute', (req, res) => {
+        res.send('totot');
+    });
 
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
-
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
-
-        return router;
-                }
-}
+    app.use('/occupant', router);
+};

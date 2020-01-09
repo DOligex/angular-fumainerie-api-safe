@@ -1,22 +1,17 @@
-import { News } from '../models/news';
 import { NewsService } from '../services/news.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application } from 'express';
+import { commonController } from '../core/common.controller';
 
-export class NewsController extends AbstractController<News> {
-    protected route!: string;
-    service = new NewsService();
+// Le controller vous servira à réceptionner les requêtes associées aux actualités
+// @param app l'application express
 
-    constructor(app: Application) {
-        super('news', app);
-    }
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
+export const NewsController = (app: Application) => {
+    const service = new NewsService();
+    const router = commonController(app, service);
 
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
+    router.get('/specificroute', (req, res) => {
+        res.send('totot');
+    });
 
-        return router;
-                }
-
-}
+    app.use('/news', router);
+};

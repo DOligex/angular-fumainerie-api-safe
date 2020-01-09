@@ -8,11 +8,10 @@ export class DrainingRequestRepository extends AbstractRepository<DrainingReques
         super('draining_request');
     }
 
-    private GET_DRAINING_REQUEST_BY_USER_ID = 'SELECT * FROM draining_request WHERE id = ? AND status = 0 ';
+    private GET_DRAINING_REQUEST_BY_USER_ID = 'SELECT * FROM draining_request WHERE user_id = ? AND status = 0 ';
 
-    async getByUserId(data: User) {
-        const userId = data.id;
-        const result = await this.db.query(this.GET_DRAINING_REQUEST_BY_USER_ID, [userId]);
+    async getByUserId(userId: number) {
+        const result = await this.db.query(this.GET_DRAINING_REQUEST_BY_USER_ID, userId);
         return result;
     }
 }

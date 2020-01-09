@@ -1,22 +1,22 @@
-import { Witness } from '../models/witness';
 import { WitnessService } from '../services/witness.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application, Router } from 'express';
+import { commonController } from '../core/common.controller';
 
-export class WitnessController extends AbstractController<Witness> {
-    protected route!: string;
-    service = new WitnessService();
+// Le controller vous servira à réceptionner les requêtes associées aux témoignages
+// @param app l'application express
 
-    constructor(app: Application) {
-        super('witness', app );
-    }
+export const WitnessController = (app: Application) => {
+    const service = new WitnessService();
+    let router = Router();
 
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
-
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
-
-        return router;
-                }
-}
+    router.get('/valided', async (req, res) => {
+        try {
+            const result = await service.getRequestWitnessValided();
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('status introuvable');
+        }
+});
+    router = commonController(app, service, router);
+    app.use('/witness', router);
+};

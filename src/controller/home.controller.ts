@@ -1,22 +1,17 @@
-import { Home } from './../models/home';
 import { HomeService } from '../services/home.service';
-import express, { Application } from 'express';
-import { AbstractController } from '../core/abstract.controller';
+import { Application } from 'express';
+import { commonController } from '../core/common.controller';
 
-export class HomeController extends AbstractController<Home> {
-    protected route!: string;
-    service = new HomeService();
+// Le controller vous servira à réceptionner les requêtes associées au foyer
+// @param app l'application express
 
-    constructor(app: Application) {
-        super('home', app);
-    }
-    protected setupAdditionalRoute(router: express.Router): void | express.Router {
+export const HomeController = (app: Application) => {
+    const service = new HomeService();
+    const router = commonController(app, service);
 
-        router.get('/specificroute', (req, res) => {
-            res.send('totot');
-        });
+    router.get('/specificroute', (req, res) => {
+        res.send('totot');
+    });
 
-        return router;
-                }
-
-}
+    app.use('/home', router);
+};
