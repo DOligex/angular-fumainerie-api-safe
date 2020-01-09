@@ -61,12 +61,19 @@ export class AuthService {
     }
 
     async confirmation(tokenStr: string) {
+<<<<<<< HEAD
         console.log(tokenStr);
         const token = await this.tokenService.getByValue(tokenStr);
         console.log('Je suis le token' + token);
         console.log(token[0]);
         if (!token) {
            throw new Error('Dans confirmation Lien invalide');
+=======
+       const token: any = await this.tokenService.getByValue(tokenStr);
+
+       if (!token) {
+           throw new Error('Lien invalide');
+>>>>>>> f869e13b384b89d7a7ad942b6651dc4fa169764f
        }
         console.log(token.user_id);
         await this.userService.updateUser(token.user_id);

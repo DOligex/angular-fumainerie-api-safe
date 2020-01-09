@@ -3,6 +3,7 @@ import { commonController } from './../core/common.controller';
 import { AuthService } from '../services/auth.service';
 import express, { Router, Request, Response, Application } from 'express';
 import { User } from 'src/models/user';
+import { read } from 'fs';
 
 /**
  * Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
