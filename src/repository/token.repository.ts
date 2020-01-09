@@ -7,4 +7,5 @@ export class TokenRepository extends AbstractRepository<Token> {
         super('token');
 
     }
+
 }

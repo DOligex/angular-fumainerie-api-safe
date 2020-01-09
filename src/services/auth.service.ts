@@ -1,31 +1,36 @@
+import { TokenService } from './token.service';
 import { UserRepository } from '../repository/user.repository';
 import { User } from '../models/user';
 import { hash, verify } from 'argon2';
 import { sign } from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
 import { createTestAccount, createTransport, getTestMessageUrl } from 'nodemailer';
+import { Token } from '../models/token';
 
 export class AuthService {
 
     private repository: UserRepository;
+    private tokenService: TokenService;
     constructor() {
         this.repository = new UserRepository();
+        this.tokenService = new TokenService();
     }
 
     async signUp(user: User) {
         const userEmail = await this.repository.findByEmail(user.email);
         if (userEmail == null || undefined) {
-        user.password = await hash(user.password);
+            user.password = await hash(user.password);
 
-        randomBytes(12).toString('hex');
+            const all = await this.repository.save(user);
 
-        const all = await this.repository.save(user);
+            const tokenString = randomBytes(12).toString('hex');
+            await this.nodemailer(tokenString, user);
 
-        const userId = all.id;
+            const token = new Token({user_id : user.id, value : tokenString});
 
-        return all;
+            return true;
         } else {
-            throw new Error('Mail already used');
+            throw new Error('Mail already used bitch');
         }
 
     }

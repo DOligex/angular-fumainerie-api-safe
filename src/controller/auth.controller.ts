@@ -18,7 +18,8 @@ export const AuthController = (app: Application) => {
         const user = req.body;
         try {
             await authService.signUp(user);
-            res.send(user);
+            // Changer user car il renvoi le mot de passe
+            res.send('Record Ok');
 
         } catch (error) {
             res.status(409).send('Email déjà existant');
