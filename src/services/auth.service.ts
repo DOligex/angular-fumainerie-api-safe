@@ -69,7 +69,7 @@ export class AuthService {
        if (!token) {
            throw new Error('Lien invalide');
        }
-        await this.userService.updateUser(token.user_id);
+       await this.userService.updateUser(token.user_id);
     }
 
     async nodemailer(token: string, user: User) {
