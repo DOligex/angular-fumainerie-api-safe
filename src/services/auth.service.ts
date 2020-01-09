@@ -71,10 +71,11 @@ export class AuthService {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to: 'bar@example.com, baz@example.com', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world?', // plain text body
-    html: '<b>Hello world?</b>', // html body
+    to: user.email, // list of receivers
+    subject: 'Activation link', // Subject line
+    html: `<b>Activation link
+    <a href="http://localhost:3000/auth/confirmation/${token}">Activation link<a>
+    </b>`, // html body
   });
 
   console.log('Message sent: %s', info.messageId);
