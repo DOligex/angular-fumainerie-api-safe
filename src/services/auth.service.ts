@@ -1,4 +1,3 @@
-import { randomBytes } from 'crypto';
 import { UserRepository } from '../repository/user.repository';
 import { User } from '../models/user';
 import { hash, verify } from 'argon2';
