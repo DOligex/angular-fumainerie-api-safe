@@ -18,6 +18,15 @@ export const DrainingController = (app: Application) => {
             res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
         }
     });
+    router.get('/user/:id/next', async (req, res) => {
+        const userId = parseInt(req.params.id, 10);
+        try {
+            const result = await service.getNextDrainingByUserId(userId);
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
+        }
+    });
 
     router = commonController(app, service, router);
 
