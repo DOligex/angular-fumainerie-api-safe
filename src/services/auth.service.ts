@@ -6,14 +6,17 @@ import { sign } from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
 import { createTestAccount, createTransport, getTestMessageUrl } from 'nodemailer';
 import { Token } from '../models/token';
+import { UserService } from './user.service';
 
 export class AuthService {
 
     private repository: UserRepository;
     private tokenService: TokenService;
+    private userService: UserService;
     constructor() {
         this.repository = new UserRepository();
         this.tokenService = new TokenService();
+        this.userService = new UserService();
     }
 
     async signUp(user: User) {
@@ -24,11 +27,11 @@ export class AuthService {
             const all = await this.repository.save(user);
 
             const tokenString = randomBytes(12).toString('hex');
+            const token = new Token({user_id : all.insertId, value : tokenString});
+
+            await this.tokenService.create(token);
+
             await this.nodemailer(tokenString, user);
-
-            const token = new Token({user_id : user.id, value : tokenString});
-
-            return;
         } else {
             throw new Error('Mail already used bitch');
         }
@@ -58,11 +61,15 @@ export class AuthService {
     }
 
     async confirmation(tokenStr: string) {
-       const token = await this.tokenService.getByValue(tokenStr);
-       if (!token) {
-           throw new Error('Lien invalide');
+        console.log(tokenStr);
+        const token = await this.tokenService.getByValue(tokenStr);
+        console.log('Je suis le token' + token);
+        console.log(token[0]);
+        if (!token) {
+           throw new Error('Dans confirmation Lien invalide');
        }
-
+        console.log(token.user_id);
+        await this.userService.updateUser(token.user_id);
     }
 
     async nodemailer(token: string, user: User) {
@@ -86,9 +93,13 @@ export class AuthService {
         from: '"Fred Foo 👻" <foo@example.com>', // sender address
         to: user.email, // list of receivers
         subject: 'Activation link', // Subject line
-        html: `<b>Activation link
-        <a href="http://localhost:3000/auth/confirmation/${token}">Activation link<a>
-        </b>`, // html body
+        html: `
+        <a href="http://localhost:3000/auth/confirmation/${token}">Activation link</a>
+
+
+        <a href="http://goole.com">Google</a>
+        
+        `, // html body
     });
 
     console.log('Message sent: %s', info.messageId);

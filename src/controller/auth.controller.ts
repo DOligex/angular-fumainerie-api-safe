@@ -37,12 +37,13 @@ export const AuthController = (app: Application) => {
     });
     authRouter.get('/confirmation/:token', async (req: Request, res: Response) => {
         const tokenStr = req.params.token;
+
         try {
-            await authService.signIn(user.email, user.password);
-            res.send(user);
+            await authService.confirmation(tokenStr);
+            res.redirect('http://localhost:4200/connexion');
 
         } catch (error) {
-            res.status(409).send('Connexion impossible');
+            res.status(400).send('Lien invalide');
 
         }
     });
