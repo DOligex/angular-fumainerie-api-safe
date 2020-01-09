@@ -33,7 +33,7 @@ export class AuthService {
             throw error;
         }
 
-        const payload = {id: user.id, email: user.email, firstname: user.firstname, accountStatus: user.account_status};
+        const payload = {id: user.id, email: user.email, firstname: user.firstname, accountStatus: user.account_status, fonction: user.fonction};
         if (!process.env.WILD_JWT_SECRET) {
             throw new Error('Server is not correctly configured');
         }
@@ -42,4 +42,5 @@ export class AuthService {
 
         return token;
     }
+
 }
