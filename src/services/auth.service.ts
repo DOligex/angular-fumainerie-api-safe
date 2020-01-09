@@ -1,3 +1,4 @@
+import { randomBytes } from 'crypto';
 import { UserRepository } from '../repository/user.repository';
 import { User } from '../models/user';
 import { hash, verify } from 'argon2';
@@ -14,6 +15,9 @@ export class AuthService {
         const userEmail = await this.repository.findByEmail(user.email);
         if (userEmail == null || undefined) {
         user.password = await hash(user.password);
+
+        randomBytes(12).toString('hex');
+
         const all = await this.repository.save(user);
         return all;
         } else {
