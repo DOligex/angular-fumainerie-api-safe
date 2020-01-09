@@ -2,6 +2,7 @@ import { UserRepository } from '../repository/user.repository';
 import { User } from '../models/user';
 import { hash, verify } from 'argon2';
 import { sign } from 'jsonwebtoken';
+import { randomBytes } from 'crypto';
 
 export class AuthService {
 
@@ -14,11 +15,18 @@ export class AuthService {
         const userEmail = await this.repository.findByEmail(user.email);
         if (userEmail == null || undefined) {
         user.password = await hash(user.password);
+
+        randomBytes(12).toString('hex');
+
         const all = await this.repository.save(user);
+
+        const userId = all.id;
+
         return all;
         } else {
             throw new Error('Mail already used');
         }
+
     }
 
     async signIn(email: string, password: string) {
