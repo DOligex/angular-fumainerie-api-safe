@@ -8,7 +8,7 @@ export class DrainingRequestRepository extends AbstractRepository<DrainingReques
         super('draining_request');
     }
 
-    private GET_DRAINING_REQUEST_BY_USER_ID = 'SELECT * FROM draining_request WHERE user_id = ? AND status = 0 ';
+    private GET_DRAINING_REQUEST_BY_USER_ID = 'SELECT * FROM draining_request INNER JOIN slot ON draining_request.slot_id = slot.id WHERE user_id = ? AND status = 0 ';
 
     async getByUserId(userId: number) {
         const result = await this.db.query(this.GET_DRAINING_REQUEST_BY_USER_ID, userId);
