@@ -1,5 +1,4 @@
-import { AbstractRepository } from './abstract.repository';
-import { DrainingRepository } from '../repository/draining.repository';
+import { AbstractRepository } from '../core/abstract.repository';
 
 export abstract class AbstractService<T> {
 
