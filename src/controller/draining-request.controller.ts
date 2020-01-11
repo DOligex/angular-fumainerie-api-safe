@@ -37,6 +37,16 @@ export const DrainingRequestController = (app: Application) => {
             res.status(404).send('Impossible de creer une demande de vidange');
         }
     });
+    router.get('/all', async (req, res) => {
+        try {
+            const result = await service.getByAllUser();
+            res.send(result);
+
+        } catch (error) {
+            res.status(404).send('Impossible de recuperer les demandes');
+
+        }
+    });
 
     router = commonController(app, service, router);
 
