@@ -36,7 +36,7 @@ export class AuthService {
 
             await this.nodemailer(tokenString, user);
         } else {
-            throw new Error('Mail already used bitch');
+            throw new Error('Mail already used ');
 
         }
 
@@ -45,12 +45,11 @@ export class AuthService {
     async signIn(email: string, password: string) {
         const user = await this.repository.findByEmail(email);
 
-        if (user.account_status !== 1) {
-        throw new Error('NOT_ACTIVE');
-        }
-
         const error = new Error('Invalid credentials');
 
+        if (user.active !== '1') {
+        throw new Error('NOT_ACTIVE');
+        }
         if (!user) {
             throw error;
         }
@@ -66,8 +65,8 @@ export class AuthService {
 
         const token = sign(payload, process.env.WILD_JWT_SECRET as string);
 
-        // return JSON.parse(token);
         return token;
+
     }
 
     async confirmation(tokenStr: string) {
@@ -77,7 +76,7 @@ export class AuthService {
        if (!token) {
            throw new Error('Lien invalide');
        }
-       await this.userService.updateUser(token.user_id); // pas sûr entre user_id ou autre chose
+       await this.userService.updateUser(token.user_id);
     }
 
     async nodemailer(token: string, user: User) {

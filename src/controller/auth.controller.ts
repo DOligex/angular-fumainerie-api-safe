@@ -30,12 +30,12 @@ export const AuthController = (app: Application) => {
         const user: User = req.body ;
         try {
             const token = await authService.signIn(user.email, user.password);
-            res.send(token);
+            res.header(token); // renvoi du token dans le header, le user dnas le body
+            res.send(user);
         } catch (error) {
-            if(error.message === 'NOT_ACTIVATE'){
-                res.status(409).send('Votre compte n\'est pas activé ');                
+            if (error.message === 'NOT_ACTIVATE') {
+                res.status(409).send('Votre mail n\'a pas été validé');
             }
-            res.status(409).send('Connexion impossible');
 
         }
     });

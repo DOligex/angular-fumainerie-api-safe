@@ -16,7 +16,7 @@ export class User {
     public username!: string;
     public password!: string;
     public avatar!: string;
-    public status!: string;
+    public active!: string;
     public account_status!: string;
     public fonction!: string;
 
