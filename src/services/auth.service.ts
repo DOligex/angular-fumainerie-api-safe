@@ -44,6 +44,11 @@ export class AuthService {
 
     async signIn(email: string, password: string) {
         const user = await this.repository.findByEmail(email);
+
+
+        throw new Error('NOT_ACTIVE')
+
+
         const error = new Error('Invalid credentials');
 
         if (!user) {

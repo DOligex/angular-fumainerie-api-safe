@@ -32,6 +32,9 @@ export const AuthController = (app: Application) => {
             const token = await authService.signIn(user.email, user.password);
             res.send(token);
         } catch (error) {
+            if(error.message === 'NOT_ACTIVATE'){
+                res.status(409).send('Votre compte n\'est pas activé ');                
+            }
             res.status(409).send('Connexion impossible');
 
         }
