@@ -61,17 +61,18 @@ export class AuthService {
 
         const token = sign(payload, process.env.WILD_JWT_SECRET as string);
 
+        // return JSON.parse(token);
         return token;
     }
 
     async confirmation(tokenStr: string) {
 
-       const token: any = await this.tokenService.getByValue(tokenStr);
+       const token = await this.tokenService.getByValue(tokenStr);
 
        if (!token) {
            throw new Error('Lien invalide');
        }
-       await this.userService.updateUser(token.user_id);
+       await this.userService.updateUser(token.user_id); // pas sûr entre user_id ou autre chose
     }
 
     async nodemailer(token: string, user: User) {

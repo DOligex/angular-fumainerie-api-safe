@@ -22,8 +22,3 @@ export class UserRepository extends AbstractRepository<User> {
 
     }
 }
-                //     async findByEmail(email: string) {
-                //         const searchEmail = '%' + email + '%';
-                //         const result = await this.db.query(this.GET_BY_EMAIL, [searchEmail, searchEmail]);
-                //         return result;
-                //     }
