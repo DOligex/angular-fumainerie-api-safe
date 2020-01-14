@@ -18,7 +18,6 @@ export const UserController = (app: Application) => {
     router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     router.get('/specificroute', (req, res) => {
-        console.log((req as any).user);
 
         res.send('totot');
     });

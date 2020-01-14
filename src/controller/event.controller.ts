@@ -1,3 +1,4 @@
+import { adminMiddleware } from './../core/admin.middleware';
 import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 import { EventService } from './../services/event.service';
@@ -9,6 +10,8 @@ import jwt = require('express-jwt');
 export const EventController = (app: Application) => {
     const service = new EventService();
     let router = Router();
+
+    router.use(adminMiddleware); // appel du middleware vérifiant le role du user
 
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
