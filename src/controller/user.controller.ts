@@ -9,18 +9,17 @@ import { User } from 'src/models/user';
 
 export const UserController = (app: Application) => {
 
-    
     const service = new UserService();
     const router = commonController(app, service);
+
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
     }
-    
     router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
-    
+
     router.get('/specificroute', (req, res) => {
         console.log((req as any).user);
-        
+
         res.send('totot');
     });
     app.use('/user', router);

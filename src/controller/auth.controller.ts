@@ -27,15 +27,17 @@ export const AuthController = (app: Application) => {
     });
 
     authRouter.post('/signin', async (req: Request, res: Response) => {
-        const user: User = req.body ;
+        const userB: User = req.body ;
         try {
-            const token = await authService.signIn(user.email, user.password);
-            res.header(token); // renvoi du token dans le header, le user dnas le body
+            const {token, user} = await authService.signIn(userB.email, userB.password);
+            res.set('JWT-TOKEN', token); // renvoi du token dans le header, le user dans le body
             res.send(user);
         } catch (error) {
-            if (error.message === 'NOT_ACTIVATE') {
+            if (error.message === 'NOT_ACTIVE') {
                 res.status(409).send('Votre mail n\'a pas été validé');
             }
+
+            res.status(409).send('Erreur dans la requete');
 
         }
     });

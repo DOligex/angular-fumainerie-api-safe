@@ -47,8 +47,8 @@ export class AuthService {
 
         const error = new Error('Invalid credentials');
 
-        if (user.active !== '1') {
-        throw new Error('NOT_ACTIVE');
+        if (user?.active === 0) {
+            throw new Error('NOT_ACTIVE');
         }
         if (!user) {
             throw error;
@@ -64,8 +64,8 @@ export class AuthService {
         }
 
         const token = sign(payload, process.env.WILD_JWT_SECRET as string);
-
-        return token;
+        user.password = 'null';
+        return {token, user};
 
     }
 
@@ -79,7 +79,7 @@ export class AuthService {
        await this.userService.updateUser(token.user_id);
     }
 
-    async nodemailer(token: string, user: User) {
+    private async nodemailer(token: string, user: User) {
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     const testAccount = await createTestAccount();
