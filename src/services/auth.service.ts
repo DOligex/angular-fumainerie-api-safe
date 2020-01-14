@@ -36,7 +36,7 @@ export class AuthService {
 
             await this.nodemailer(tokenString, user);
         } else {
-            throw new Error('Mail already used bitch');
+            throw new Error('Mail already used ');
 
         }
 
@@ -44,8 +44,12 @@ export class AuthService {
 
     async signIn(email: string, password: string) {
         const user = await this.repository.findByEmail(email);
+
         const error = new Error('Invalid credentials');
 
+        if (user?.active === 0) {
+            throw new Error('NOT_ACTIVE');
+        }
         if (!user) {
             throw error;
         }
@@ -60,13 +64,14 @@ export class AuthService {
         }
 
         const token = sign(payload, process.env.WILD_JWT_SECRET as string);
+        user.password = 'null';
+        return {token, user};
 
-        return token;
     }
 
     async confirmation(tokenStr: string) {
 
-       const token: any = await this.tokenService.getByValue(tokenStr);
+       const token = await this.tokenService.getByValue(tokenStr);
 
        if (!token) {
            throw new Error('Lien invalide');
@@ -74,7 +79,7 @@ export class AuthService {
        await this.userService.updateUser(token.user_id);
     }
 
-    async nodemailer(token: string, user: User) {
+    private async nodemailer(token: string, user: User) {
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     const testAccount = await createTestAccount();

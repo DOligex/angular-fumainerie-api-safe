@@ -3,7 +3,6 @@ import { commonController } from './../core/common.controller';
 import { AuthService } from '../services/auth.service';
 import express, { Router, Request, Response, Application } from 'express';
 import { User } from 'src/models/user';
-import { read } from 'fs';
 
 /**
  * Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
@@ -27,12 +26,17 @@ export const AuthController = (app: Application) => {
     });
 
     authRouter.post('/signin', async (req: Request, res: Response) => {
-        const user: User = req.body ;
+        const userB: User = req.body ;
         try {
-            const token = await authService.signIn(user.email, user.password);
-            res.send(token);
+            const {token, user} = await authService.signIn(userB.email, userB.password);
+            res.set('JWT-TOKEN', token); // renvoi du token dans le header, le user dans le body
+            res.send(user);
         } catch (error) {
-            res.status(409).send('Connexion impossible');
+            if (error.message === 'NOT_ACTIVE') {
+                res.status(409).send('Votre mail n\'a pas été validé');
+            }
+
+            res.status(409).send('Erreur dans la requete');
 
         }
     });

@@ -9,7 +9,14 @@ export const HomeController = (app: Application) => {
     const service = new HomeService();
     const router = commonController(app, service);
 
-    router.get('/specificroute', (req, res) => {
+    router.post('/form', async (req, res) => {
+        const home = req.body;
+        console.log(req.body);
+        try {
+            await service.saveHomeForm(home);
+        } catch (error) {
+            res.status(409).send('pouet');
+        }
         res.send('totot');
     });
 
