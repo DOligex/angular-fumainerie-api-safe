@@ -11,10 +11,11 @@ export const HomeController = (app: Application) => {
 
     router.post('/form', async (req, res) => {
         const home = req.body;
+        console.log(req.body);
         try {
-            // await service.saveHomeForm(home, id);
+            await service.saveHomeForm(home);
         } catch (error) {
-            res.status(409).send('');
+            res.status(409).send('pouet');
         }
         res.send('totot');
     });

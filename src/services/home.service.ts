@@ -14,11 +14,14 @@ export class HomeService extends AbstractService<Home> {
                 this.service = new UserService();
         }
 
-        async saveHomeForm(home: Home, id: number) {
-                const homeSave = await this.repository.saveHomeDetails(home, id);
+        async saveHomeForm(home: Home) {
+                const homeSave = await this.repository.saveHomeDetails(home);
                 if (!homeSave) {
                         throw new Error('La requete n\'a pas aboutit');
                 }
-                // const updateUserAccountStatut = await this.service.updateUserAccount();
+                const updateUserAccountStatut = await this.service.updateUserAccount(home.user_id);
+                if (!updateUserAccountStatut) {
+                        throw new Error('Le statut n\'a pas pu être mis à jour');
+                }
         }
 }
