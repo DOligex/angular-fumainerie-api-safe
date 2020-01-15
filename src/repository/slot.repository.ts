@@ -6,9 +6,7 @@ export class SlotRepository extends AbstractRepository<Slot> {
 
     constructor() {
         super('slot');
-
     }
-
     // async save(slot: any) {
     //     // votre code ici
     // }

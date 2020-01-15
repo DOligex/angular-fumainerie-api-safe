@@ -34,7 +34,7 @@ export abstract class AbstractRepository<T> {
         return this.db.query(this.DEL_BY_ID, id) as Promise<T>;
     }
 
-    save(element: T): Promise<T> {
+    save(element: any): Promise<any> {
         return this.db.query(this.POST_BY_ID, element) as Promise<T>;
     }
 }

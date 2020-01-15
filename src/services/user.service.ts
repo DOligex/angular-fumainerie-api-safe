@@ -11,4 +11,12 @@ export class UserService extends AbstractService<User> {
         return search;
     }
 
+    async updateUser(userId: number) {
+        const user = await this.repository.updateStatuts(userId);
+        return user;
+    }
+    async updateUserAccount(userId: number) {
+        const user = await this.repository.updateAccountStatut(userId);
+        return user;
+    }
 }

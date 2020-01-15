@@ -1,4 +1,4 @@
-import { AbstractRepository } from './abstract.repository';
+import { AbstractRepository } from '../core/abstract.repository';
 
 export abstract class AbstractService<T> {
 

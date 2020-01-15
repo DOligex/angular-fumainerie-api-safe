@@ -16,9 +16,9 @@ export class User {
     public username!: string;
     public password!: string;
     public avatar!: string;
-    public status!: string;
-    public account_status!: string;
-    public function!: string;
+    public email_active!: number;
+    public account_status!: boolean;
+    public fonction!: string;
 
     constructor(input: User) {
         Object.assign(this, input);

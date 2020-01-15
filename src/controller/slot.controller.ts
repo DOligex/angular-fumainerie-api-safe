@@ -1,5 +1,5 @@
 import { SlotService } from '../services/slot.service';
-import { Application } from 'express';
+import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 
 // Le controller vous servira à réceptionner les requêtes associées aux créneaux d'interventions proposés
@@ -7,11 +7,13 @@ import { commonController } from '../core/common.controller';
 
 export const SlotController = (app: Application) => {
     const service = new SlotService();
-    const router = commonController(app, service);
+    let router = Router();
 
-    router.get('/specificroute', (req, res) => {
-        res.send('totot');
+    router.get('/all', async (req, res) => {
+       const slots =  await service.getAll();
+       res.send(slots);
     });
+    router = commonController(app, service);
 
     app.use('/slot', router);
 };
