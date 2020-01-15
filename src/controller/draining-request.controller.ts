@@ -1,9 +1,8 @@
-import { DrainingRequest } from './../models/draining-request';
 import { DrainingService } from './../services/draining.service';
 import { DrainingRequestService } from './../services/draining_request.service';
 import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
-import { Draining } from '../models/draining';
+import { vidangeurMiddleware } from '../core/vidangeur.middleware';
 
 // Le controller vous servira à réceptionner les requêtes associées aux demandes de vidanges
 // @param app l'application express
@@ -34,7 +33,7 @@ export const DrainingRequestController = (app: Application) => {
             const result = await service.upload(draining);
             res.send(result);
         } catch (error) {
-            res.status(404).send('Impossible de creer une demande de vidange');
+            res.status(404).send('Impossible de créer une demande de vidange');
         }
     });
 

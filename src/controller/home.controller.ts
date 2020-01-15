@@ -1,3 +1,4 @@
+import { vidangeurMiddleware } from './../core/vidangeur.middleware';
 import { HomeService } from '../services/home.service';
 import { Application } from 'express';
 import { commonController } from '../core/common.controller';
@@ -15,9 +16,18 @@ export const HomeController = (app: Application) => {
         try {
             await service.saveHomeForm(home);
         } catch (error) {
-            res.status(409).send('pouet');
+            res.status(409).send('La requête n\'a pas abouti');
         }
-        res.send('totot');
+    });
+
+    router.post('/draining-requested', vidangeurMiddleware, async (req, res) => {
+        // route pour poster une vidange
+        const home = req.body;
+        try {
+            await service.saveHomeForm(home);
+        } catch (error) {
+            res.status(409).send('La requête n\'a pas abouti');
+        }
     });
 
     app.use('/home', router);
