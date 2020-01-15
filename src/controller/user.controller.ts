@@ -15,7 +15,8 @@ export const UserController = (app: Application) => {
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
     }
-    router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
+    // to enable the bottom line for the auth process work 🤨
+    // router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     router.get('/specificroute', (req, res) => {
 

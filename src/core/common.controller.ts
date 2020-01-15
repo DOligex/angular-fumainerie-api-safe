@@ -7,6 +7,7 @@ export const commonController = (app: Application, service: AbstractService<any>
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
     }
+    // to enable the bottom line for the auth process work 🤨
     // abstractRouter.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     abstractRouter.get('/', async (req: Request, res: Response) => {
