@@ -1,7 +1,7 @@
 
 import { commonController } from './../core/common.controller';
 import { AuthService } from '../services/auth.service';
-import express, { Router, Request, Response, Application } from 'express';
+import express, { Router, Request, Response, Application, response } from 'express';
 import { User } from 'src/models/user';
 
 /**
@@ -29,6 +29,7 @@ export const AuthController = (app: Application) => {
         const userB: User = req.body ;
         try {
             const {token, user} = await authService.signIn(userB.email, userB.password);
+            res.set('access-control-expose-headers', 'JWT-TOKEN');
             res.set('JWT-TOKEN', token); // renvoi du token dans le header, le user dans le body
             res.send(user);
         } catch (error) {
@@ -37,7 +38,6 @@ export const AuthController = (app: Application) => {
             }
 
             res.status(409).send('Erreur dans la requete');
-
         }
     });
 

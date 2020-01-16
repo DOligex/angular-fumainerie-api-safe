@@ -13,6 +13,7 @@ export class Home {
     public address_plus!: string;
     public zip!: number;
     public city!: string;
+    public phone!: string;
     public emptying_story!: string;
     public startAt!: string;
     public people!: string;
