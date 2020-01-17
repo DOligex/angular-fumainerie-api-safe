@@ -20,14 +20,3 @@ export const NewsController = (app: Application) => {
     router = commonController(app, service, router);
     app.use('/news', router);
 };
-
-// const service = new WitnessService();
-// const router = Router();
-
-// router.get('/validations', async (req, res) => {
-//     try {
-//         const result = await service.getValide();
-//         res.send(result);
-//     } catch (error) {
-//     }
-// });
