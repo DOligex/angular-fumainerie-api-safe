@@ -10,8 +10,12 @@ export class DrainingRequestService extends AbstractService<DrainingRequest> {
         const draining = await this.repository.getByUserId(userId);
         return draining;
     }
-    async getByAllUser() {
-        const allDraining = await this.repository.getByAllUser();
+    async getAllDrainingRequestUnchecked() {
+        const allDraining = await this.repository.getAllDrainingRequestUnchecked();
         return allDraining;
+    }
+    async getNextDrainingByUserId(userId: number) {
+        const draining = await this.repository.getNextDraining(userId);
+        return draining;
     }
     }

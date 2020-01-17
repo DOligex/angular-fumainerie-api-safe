@@ -18,10 +18,13 @@ export const DrainingController = (app: Application) => {
             res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
         }
     });
-    router.get('/user/:id/next', async (req, res) => {
-        const userId = parseInt(req.params.id, 10);
+
+    router.put('/status', async (req, res) => {
+        const userId = parseInt(req.body.id, 10);
         try {
-            const result = await service.getNextDrainingByUserId(userId);
+            console.log(userId);
+
+            const result = await service.update(userId);
             res.send(result);
         } catch (error) {
             res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
@@ -32,3 +35,4 @@ export const DrainingController = (app: Application) => {
 
     app.use('/draining', router);
 };
+

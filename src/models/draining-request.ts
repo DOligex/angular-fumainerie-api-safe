@@ -12,6 +12,7 @@ export class DrainingRequest {
     public draining_id!: number;
     public user_id!: number;
     public slot_id!: number;
+    public emergency!: boolean;
 
     constructor(input: DrainingRequest) {
         Object.assign(this, input);

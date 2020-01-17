@@ -1,7 +1,7 @@
 import { DrainingRequest } from './../models/draining-request';
 import { DrainingService } from './../services/draining.service';
 import { DrainingRequestService } from './../services/draining_request.service';
-import { Application, Router } from 'express';
+import { Application, Router, Request, Response } from 'express';
 import { commonController } from '../core/common.controller';
 import { Draining } from '../models/draining';
 
@@ -25,26 +25,56 @@ export const DrainingRequestController = (app: Application) => {
     });
 
     router.post('/draining', async (req, res) => {
-        const draining = req.body;
-        const userId: number = parseInt(req.body.user_id, 10);
-
+        const drainingRequest = req.body;
+        const userId: number = parseInt(req.body[0].user_id, 10);
         try {
             const idDrainingCreated = await drainingService.createDraining(userId);
-            draining.draining_id = idDrainingCreated;
-            const result = await service.upload(draining);
-            res.send(result);
+            for (const request of drainingRequest) {
+                delete request.name;
+                request.draining_id = idDrainingCreated;
+                const result = await service.upload(request);
+            }
+            res.send({id: idDrainingCreated});
         } catch (error) {
             res.status(404).send('Impossible de creer une demande de vidange');
         }
     });
-    router.get('/all', async (req, res) => {
+    router.get('/user/:id/next', async (req, res) => {
+        const userId = parseInt(req.params.id, 10);
         try {
-            const result = await service.getByAllUser();
+            const result = await service.getNextDrainingByUserId(userId);
             res.send(result);
+        } catch (error) {
+            res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
+        }
+    });
+    router.get('/unchecked', async (req, res) => {
+        try {
+            const result = await service.getAllDrainingRequestUnchecked();
+            const arrayA = [];
+            const useridArray: number[] = [];
+            result.filter((element: { user_id: number; }) => useridArray.push(element.user_id));
+            const realUserIdArray = Array.from(new Set(useridArray));
+            // tslint:disable-next-line: prefer-for-of
+            for (let index = 0; index < realUserIdArray.length; index++) {
+                const depart = realUserIdArray[index];
+                arrayA.push(result.filter((object: { user_id: number; }) => object.user_id === depart));
+            }
+            res.send(arrayA);
 
         } catch (error) {
             res.status(404).send('Impossible de recuperer les demandes');
 
+        }
+    });
+    router.put('/:id/accepte', async (req: Request, res: Response) => {
+        const id = parseInt(req.params.id, 10);
+        const element = req.body;
+        try {
+           const result = await service.modifyElement(element, id );
+           res.send(result);
+        } catch (error) {
+            res.status(404).send('Error');
         }
     });
 

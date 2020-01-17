@@ -11,7 +11,7 @@ export abstract class AbstractRepository<T> {
 
     constructor(tablename: string) {
         this.db = DbHandler.getInstance();
-        this.GET_ALL = `SELECT * FROM ${tablename} INNER JOIN user ON ${tablename}.user_id = user.id;`;
+        this.GET_ALL = `SELECT * FROM ${tablename}`;
         this.GET_BY_ID = `SELECT * FROM ${tablename} WHERE id = ? ;`;
         this.PUT_BY_ID = `UPDATE ${tablename} SET ? WHERE id = ? ;`;
         this.DEL_BY_ID = `DELETE FROM ${tablename} WHERE id = ? ;`;
