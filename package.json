@@ -30,7 +30,7 @@
   "dependencies": {
     "@types/express-jwt": "0.0.42",
     "@types/jsonwebtoken": "^8.3.5",
-    "argon2": "^0.25.1",
+    "argon2": "^0.24.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
