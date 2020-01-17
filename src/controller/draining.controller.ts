@@ -20,9 +20,8 @@ export const DrainingController = (app: Application) => {
     });
 
     router.put('/status', async (req, res) => {
-        const userId = parseInt(req.body.id, 10);
+        const userId = req.body.id;
         try {
-            console.log(userId);
 
             const result = await service.update(userId);
             res.send(result);
@@ -35,4 +34,3 @@ export const DrainingController = (app: Application) => {
 
     app.use('/draining', router);
 };
-
