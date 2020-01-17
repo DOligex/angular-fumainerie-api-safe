@@ -1,5 +1,3 @@
-
-import { commonController } from './../core/common.controller';
 import { AuthService } from '../services/auth.service';
 import express, { Router, Request, Response, Application, response } from 'express';
 import { User } from 'src/models/user';

@@ -17,7 +17,6 @@ export const HomeController = (app: Application) => {
 
     router.post('/update', async (req, res) => {
         const objectRequest = req.body;
-        // console.log(req.body);
 
         try {
             await service.saveHomeForm(objectRequest[0], objectRequest[1]);
