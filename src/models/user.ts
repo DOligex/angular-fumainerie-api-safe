@@ -11,12 +11,11 @@ export class User {
     public firstname!: string;
     public lastname!: string;
     public birth_date!: string;
-    public phone!: string;
     public email!: string;
     public username!: string;
     public password!: string;
     public avatar!: string;
-    public active!: number;
+    public email_active!: number;
     public account_status!: boolean;
     public fonction!: string;
 

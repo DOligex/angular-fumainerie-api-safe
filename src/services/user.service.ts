@@ -6,17 +6,22 @@ export class UserService extends AbstractService<User> {
 
     repository = new UserRepository();
 
-    async getBySearch(word: string) {
-        const search = await this.repository.findByEmail(word);
+    getById(id: number) {
+        const search = this.repository.findById(id);
         return search;
     }
 
-    async updateUser(userId: number) {
-        const user = await this.repository.updateStatuts(userId);
+    getBySearch(word: string) {
+        const search = this.repository.findByEmail(word);
+        return search;
+    }
+
+    updateUser(userId: number) {
+        const user = this.repository.updateStatuts(userId);
         return user;
     }
-    async updateUserAccount(userId: number) {
-        const user = await this.repository.updateAccountStatut(userId);
+    updateUserAccount(userId: number) {
+        const user =  this.repository.updateAccountStatut(userId);
         return user;
     }
 }

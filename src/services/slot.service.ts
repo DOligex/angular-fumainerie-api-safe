@@ -6,8 +6,4 @@ export class SlotService extends AbstractService<Slot> {
 
     repository = new SlotRepository();
 
-    // async signUp(slot: Slot) {
-    //     return this.repository.save(slot);
-    // }
-
 }

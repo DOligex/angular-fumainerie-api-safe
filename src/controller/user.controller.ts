@@ -17,9 +17,12 @@ export const UserController = (app: Application) => {
     }
     router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
-    router.get('/specificroute', (req, res) => {
-
-        res.send('totot');
+    router.get('/me', async (req, res) => {
+        const user = await service.getById((req as any).user.id);
+        if (!user) {
+            res.status(400).send('Aucun utilisateur trouvé pour ce token');
+        }
+        res.send(user);
     });
     app.use('/user', router);
 };

@@ -5,11 +5,10 @@ export class UserRepository extends AbstractRepository<User> {
 
     private GET_BY_EMAIL = 'SELECT * FROM user WHERE email = ? ';
     private UPDATE_STATUS_TO_ACTIVE = 'UPDATE user SET active = 1 WHERE id = ?';
-    private UPDATE_ACCOUNT_STATUS_TO_ACTIVE = 'UPDATE user SET status_account = 1 WHERE id = ?';
+    private UPDATE_ACCOUNT_STATUS_TO_ACTIVE = 'UPDATE user SET account_status = 1 WHERE id = ?';
 
     constructor() {
         super('user');
-
     }
 
     async findByEmail(email: string) {

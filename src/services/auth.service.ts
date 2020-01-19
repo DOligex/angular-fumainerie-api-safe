@@ -47,7 +47,7 @@ export class AuthService {
 
         const error = new Error('Invalid credentials');
 
-        if (user?.active === 0) {
+        if (user?.email_active === 0) {
             throw new Error('NOT_ACTIVE');
         }
         if (!user) {
