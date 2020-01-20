@@ -18,6 +18,14 @@ export const DrainingController = (app: Application) => {
             res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
         }
     });
+    router.get('/accepted', async (req, res) => {
+        try {
+            const result = await service.getDrainingAccepted();
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('Pas de demande trouvé');
+        }
+    });
 
     router.put('/status', async (req, res) => {
         const userId = req.body.id;

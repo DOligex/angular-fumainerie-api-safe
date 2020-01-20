@@ -23,6 +23,15 @@ export const DrainingRequestController = (app: Application) => {
             res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
         }
     });
+    router.get('/user/:id/next', async (req, res) => {
+        const userId = parseInt(req.params.id, 10);
+        try {
+            const result = await service.getNextDrainingByUserId(userId);
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
+        }
+    });
 
     router.post('/draining', async (req, res) => {
         const drainingRequest = req.body;
@@ -37,15 +46,6 @@ export const DrainingRequestController = (app: Application) => {
             res.send({id: idDrainingCreated});
         } catch (error) {
             res.status(404).send('Impossible de creer une demande de vidange');
-        }
-    });
-    router.get('/user/:id/next', async (req, res) => {
-        const userId = parseInt(req.params.id, 10);
-        try {
-            const result = await service.getNextDrainingByUserId(userId);
-            res.send(result);
-        } catch (error) {
-            res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
         }
     });
     router.get('/unchecked', async (req, res) => {
@@ -69,10 +69,18 @@ export const DrainingRequestController = (app: Application) => {
     });
     router.put('/:id/accepte', async (req: Request, res: Response) => {
         const id = parseInt(req.params.id, 10);
+        const userId = req.body.user_id;
         const element = req.body;
+        const vId = element. vidangeur_id;
+
         try {
-           const result = await service.modifyElement(element, id );
-           res.send(result);
+            delete element.vidangeur_id;
+            const result = await service.modifyElement(element, id );
+            delete element.accepted;
+
+            element.vidangeur_id = vId;
+            await drainingService.modifyDraining(element, userId);
+            res.send(result);
         } catch (error) {
             res.status(404).send('Error');
         }
