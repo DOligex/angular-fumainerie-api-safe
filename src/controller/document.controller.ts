@@ -13,15 +13,11 @@ export const DocumentController = (app: Application) => {
     const service = new DocumentService();
     const router = commonController(app, service);
 
-    router.use(adminMiddleware); // appel du middleware vérifiant le role du user
-
-    router.get('/specificroute', (req, res) => {
-        res.send('totot');
-    });
+    // router.use(adminMiddleware); // appel du middleware vérifiant le role du user
 
     const storage = multer.diskStorage({
         destination: (req, file, cb ) => {
-          cb(null, 'uploads/');
+          cb(null, 'documents_ovh/');
         },
         filename: (req, file, cb) => {
           cb(null, file.fieldname + '-' + Date.now() + '.pdf' );
@@ -36,14 +32,14 @@ export const DocumentController = (app: Application) => {
         },
       });
 
-    router.post('/file', upload.single('document'), async (req, res, next) => {
-          const files = req.files;
-          if (!files) {
+    router.post('/file', upload.single('file'), async (req, res, next) => {
+          const file = req.file;
+          if (!file) {
             const error = new Error('Please upload a file');
             res.sendStatus(400);
             return next(error);
           }
-          res.send(files);
+          res.send(file);
         });
 
     app.use('/document', router);
