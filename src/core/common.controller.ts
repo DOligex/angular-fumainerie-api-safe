@@ -4,14 +4,15 @@ import jwt = require('express-jwt');
 
 export const commonController = (app: Application, service: AbstractService<any>, abstractRouter = Router()) => {
 
-    if (!process.env.WILD_JWT_SECRET) {
-        throw new Error('Secret is not defined');
-    }
-    abstractRouter.use(jwt({secret: process.env.WILD_JWT_SECRET}));
-
     abstractRouter.get('/', async (req: Request, res: Response) => {
-        const result = await service.getAll();
-        res.send(result);
+
+        try {
+            const result = await service.getAll();
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('Récupération impossible');
+        }
+
     });
 
     abstractRouter.get('/:id', async (req: Request, res: Response) => {
@@ -21,7 +22,7 @@ export const commonController = (app: Application, service: AbstractService<any>
             const result = await service.getById(id);
             res.send(result);
         } catch (error) {
-            res.status(404).send('coucou');
+            res.status(404).send('Récupération via id impossible');
         }
     });
 

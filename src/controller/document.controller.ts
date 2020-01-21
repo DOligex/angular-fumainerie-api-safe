@@ -1,20 +1,28 @@
 import { DocumentService } from './../services/document.service';
-import { Application } from 'express';
+import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 import { adminMiddleware } from '../core/admin.middleware';
+import jwt = require('express-jwt');
 
 // Le controller vous servira à réceptionner les requêtes associées aux documents
 // @param app l'application express
 
 export const DocumentController = (app: Application) => {
+
+    if (!process.env.WILD_JWT_SECRET) {
+        throw new Error('Secret is not defined');
+    }
     const service = new DocumentService();
     const router = commonController(app, service);
-
+    router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
     router.use(adminMiddleware); // appel du middleware vérifiant le role du user
 
-    router.get('/specificroute', (req, res) => {
-        res.send('totot');
-    });
-
+    // router.get('/accueil', (req, res) => {
+    //     try {
+    //         res.send('test sans middleware');
+    //     } catch (error) {
+    //         res.status(402).send('pas de récupération');
+    //     }
+    // });
     app.use('/document', router);
 };

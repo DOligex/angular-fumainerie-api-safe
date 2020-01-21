@@ -1,4 +1,5 @@
 import { DbHandler } from './../repository/db.handler';
+import { User } from 'src/models/user';
 
 export abstract class AbstractRepository<T> {
     protected db: DbHandler;
@@ -22,8 +23,9 @@ export abstract class AbstractRepository<T> {
         return this.db.query(this.GET_ALL) as Promise<T[]>;
     }
 
-    findById(id: number): Promise<T[]> {
-        return this.db.query(this.GET_BY_ID, id) as Promise<T[]>;
+    async findById(id: number): Promise<T[]> {
+        const user =  await (this.db.query(this.GET_BY_ID, id) as Promise<any[]>);
+        return user[0] || null;
     }
 
     modify(element: T, id: number): Promise<T> {
