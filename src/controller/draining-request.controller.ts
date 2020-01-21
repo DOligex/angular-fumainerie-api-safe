@@ -26,10 +26,11 @@ export const DrainingRequestController = (app: Application) => {
     router.post('/draining', async (req, res) => {
         const draining = req.body;
         const userId: number = parseInt(req.body.user_id, 10);
-
+        // Trop de logique dans le controller, il faut déplacer ça dans le service 🤨
         try {
             const idDrainingCreated = await drainingService.createDraining(userId);
             draining.draining_id = idDrainingCreated;
+            // Il ne s'agit pas d'une opération d'upload, mais d'un create/save 🤨
             const result = await service.upload(draining);
             res.send(result);
         } catch (error) {

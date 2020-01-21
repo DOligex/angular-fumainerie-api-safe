@@ -9,7 +9,8 @@ export class HomeRepository extends AbstractRepository<Home> {
         super('home');
 
     }
-
+    // POST_BY_USER_ID => nom erroné 🤨
+    // Logique déjà présente dans le abstract 🤨
     async saveHomeDetails(home: Home) {
         const formSaved = await this.db.query(this.POST_BY_USER_ID, home);
         return formSaved;

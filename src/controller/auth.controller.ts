@@ -50,6 +50,7 @@ export const AuthController = (app: Application) => {
 
         } catch (error) {
             res.status(400).send('Lien invalide');
+            res.status(409).send('Connexion impossible');
 
         }
     });

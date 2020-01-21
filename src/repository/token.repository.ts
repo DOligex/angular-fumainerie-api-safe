@@ -2,6 +2,7 @@ import { AbstractRepository } from '../core/abstract.repository';
 import { Token } from '../models/token';
 
 export class TokenRepository extends AbstractRepository<Token> {
+    // GET_BY_VALUE et pas GET_BY_ID_TOKEN 🤨
     private GET_BY_ID_TOKEN = 'SELECT * FROM token WHERE value = ?';
 
     constructor() {

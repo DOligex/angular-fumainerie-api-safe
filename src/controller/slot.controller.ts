@@ -13,6 +13,7 @@ export const SlotController = (app: Application) => {
        const slots =  await service.getAll();
        res.send(slots);
     });
+    // Il manque le passage du routeur au commonController(service, router) 🤨
     router = commonController(app, service);
 
     app.use('/slot', router);

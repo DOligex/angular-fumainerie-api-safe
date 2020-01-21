@@ -10,6 +10,7 @@ export const HomeController = (app: Application) => {
     const service = new HomeService();
     const router = commonController(app, service);
 
+        // Duplication de code 🤨 l13 => l30
     router.post('/form', async (req, res) => {
         const home = req.body;
         console.log(req.body);
