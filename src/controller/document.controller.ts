@@ -50,6 +50,15 @@ export const DocumentController = (app: Application) => {
       const result = await service.create(req.body);
       res.send(result);
     });
+    router.get('/recherche/:word', async (req, res) => {
+      const word = req.params.word;
+      try {
+          const result = await service.getBySearch(word);
+          res.send(result);
+      } catch (error) {
+          res.status(404).send('Erreur recherche mot');
+      }
+  });
 
     router = commonController(app, service, router);
     app.use('/document', router);
