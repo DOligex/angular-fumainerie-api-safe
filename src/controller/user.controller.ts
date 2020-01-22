@@ -18,6 +18,7 @@ export const UserController = (app: Application) => {
     userRouter.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     userRouter.get('/me', async (req, res) => {
+        (req as any).user.password = 'null';
         const user = await service.getById((req as any).user.id);
         if (!user) {
             res.status(400).send('Aucun utilisateur trouvé pour ce token');

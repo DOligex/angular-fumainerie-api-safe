@@ -13,16 +13,17 @@ export const DocumentController = (app: Application) => {
         throw new Error('Secret is not defined');
     }
     const service = new DocumentService();
-    const router = commonController(app, service);
-    router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
-    router.use(adminMiddleware); // appel du middleware vérifiant le role du user
+    let router = Router();
 
-    // router.get('/accueil', (req, res) => {
-    //     try {
-    //         res.send('test sans middleware');
-    //     } catch (error) {
-    //         res.status(402).send('pas de récupération');
-    //     }
-    // });
+    router.get('/accueil', (req, res) => {
+        try {
+            res.send('test sans middleware');
+        } catch (error) {
+            res.status(402).send('pas de récupération');
+        }
+    });
+    router.use(adminMiddleware); // appel du middleware vérifiant le role du user
+    router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
+    router = commonController(app, service);
     app.use('/document', router);
 };

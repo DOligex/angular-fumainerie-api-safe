@@ -29,6 +29,7 @@ export const AuthController = (app: Application) => {
             const {token, user} = await authService.signIn(userB.email, userB.password);
             res.set('access-control-expose-headers', 'JWT-TOKEN');
             res.set('JWT-TOKEN', token); // renvoi du token dans le header, le user dans le body
+            user.password = 'null';
             res.send(user);
         } catch (error) {
             if (error.message === 'NOT_ACTIVE') {

@@ -64,7 +64,6 @@ export class AuthService {
         }
 
         const token = sign(payload, process.env.WILD_JWT_SECRET as string);
-        user.password = 'null';
         return {token, user};
 
     }
