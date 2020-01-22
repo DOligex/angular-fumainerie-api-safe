@@ -1,7 +1,9 @@
 
   import bodyParser from 'body-parser';
   import cors from 'cors';
-  import { Application } from 'express';
+  import express, { Application } from 'express';
+  import { env } from '../core/environnement';
+  const path = require('path');
 
   export default async ( app: Application) => {
 
@@ -11,6 +13,9 @@
     app.use(cors());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
+
+    const p = path.join(__dirname, '../../' + env.uploadFolder);
+    app.use('/uploads', express.static(p));
 
     // ...More middlewares
 
