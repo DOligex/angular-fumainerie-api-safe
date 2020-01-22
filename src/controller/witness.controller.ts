@@ -1,6 +1,8 @@
+import { adminMiddleware } from './../core/admin.middleware';
 import { WitnessService } from '../services/witness.service';
 import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
+import jwt = require('express-jwt');
 
 // Le controller vous servira à réceptionner les requêtes associées aux témoignages
 // @param app l'application express
@@ -9,7 +11,12 @@ export const WitnessController = (app: Application) => {
     const service = new WitnessService();
     let router = Router();
 
-    router.get('/validations', async (req, res) => {
+    if (!process.env.WILD_JWT_SECRET) {
+        throw new Error('Secret is not defined');
+    }
+    router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
+
+    router.get('/validations', adminMiddleware, async (req, res) => {
         try {
             const result = await service.getValide();
             res.send(result);

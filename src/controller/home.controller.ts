@@ -1,19 +1,20 @@
-import { UserService } from './../services/user.service';
 import { vidangeurMiddleware } from './../core/vidangeur.middleware';
 import { HomeService } from '../services/home.service';
-import { Application } from 'express';
+import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
-import { Home } from 'src/models/home';
 import jwt = require('express-jwt');
-import { decode } from 'jsonwebtoken';
 
 // Le controller vous servira à réceptionner les requêtes associées au foyer
 // @param app l'application express
 
 export const HomeController = (app: Application) => {
     const service = new HomeService();
-    const userService = new UserService();
-    const router = commonController(app, service);
+    let router = Router();
+
+    if (!process.env.WILD_JWT_SECRET) {
+        throw new Error('Secret is not defined');
+    }
+    router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     router.post('/update', async (req, res) => {
         const objectRequest = req.body;
@@ -35,5 +36,6 @@ export const HomeController = (app: Application) => {
         }
     });
 
+    router = commonController(app, service, router);
     app.use('/home', router);
 };

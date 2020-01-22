@@ -1,5 +1,5 @@
 import { OccupantService } from '../services/occupant.service';
-import { Application } from 'express';
+import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 
 // Le controller vous servira à réceptionner les requêtes associées aux occupants d'un foyer
@@ -7,11 +7,12 @@ import { commonController } from '../core/common.controller';
 
 export const OccupantController = (app: Application) => {
     const service = new OccupantService();
-    const router = commonController(app, service);
+    let router = Router();
 
     router.get('/specificroute', (req, res) => {
         res.send('totot');
     });
 
+    router = commonController(app, service, router);
     app.use('/occupant', router);
 };

@@ -1,8 +1,9 @@
+import { vidangeurMiddleware } from './../core/vidangeur.middleware';
 import { DrainingService } from './../services/draining.service';
 import { DrainingRequestService } from './../services/draining_request.service';
 import { Application, Router, Request, Response } from 'express';
 import { commonController } from '../core/common.controller';
-import { vidangeurMiddleware } from '../core/vidangeur.middleware';
+import jwt = require('express-jwt');
 
 // Le controller vous servira à réceptionner les requêtes associées aux demandes de vidanges
 // @param app l'application express
@@ -12,6 +13,11 @@ export const DrainingRequestController = (app: Application) => {
     const drainingService = new DrainingService();
 
     let router = Router();
+    
+    if (!process.env.WILD_JWT_SECRET) {
+        throw new Error('Secret is not defined');
+    }
+    router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     router.get('/user/:id', async (req, res) => {
         const userId = parseInt(req.params.id, 10);
@@ -47,7 +53,7 @@ export const DrainingRequestController = (app: Application) => {
             res.status(404).send('Impossible de créer une demande de vidange');
         }
     });
-    router.get('/unchecked', async (req, res) => {
+    router.get('/unchecked', vidangeurMiddleware, async (req, res) => {
         try {
             const result = await service.getAllDrainingRequestUnchecked();
             const arrayA = [];
@@ -66,7 +72,7 @@ export const DrainingRequestController = (app: Application) => {
 
         }
     });
-    router.put('/:id/accepte', async (req: Request, res: Response) => {
+    router.put('/:id/accepte', vidangeurMiddleware, async (req: Request, res: Response) => {
         const id = parseInt(req.params.id, 10);
         const userId = req.body.user_id;
         const element = req.body;
