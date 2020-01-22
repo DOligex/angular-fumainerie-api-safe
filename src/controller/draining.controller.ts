@@ -1,3 +1,4 @@
+import { vidangeurMiddleware } from './../core/vidangeur.middleware';
 import { DrainingService } from '../services/draining.service';
 import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
@@ -28,7 +29,7 @@ export const DrainingController = (app: Application) => {
         }
     });
 
-    router.put('/status', async (req, res) => {
+    router.put('/status', vidangeurMiddleware, async (req, res) => {
         const userId = req.body.id;
         try {
 
@@ -38,8 +39,8 @@ export const DrainingController = (app: Application) => {
             res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
         }
     });
-
+//////////////////////////////////////////////////////////////
     // router = commonController(app, service, router);
-
+////////////////////////////////////////////////////////
     app.use('/draining', router);
 };

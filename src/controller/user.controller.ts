@@ -2,7 +2,6 @@ import { UserService } from './../services/user.service';
 import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 import jwt = require('express-jwt');
-import { User } from 'src/models/user';
 
 // Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
 // @param app l'application express

@@ -1,10 +1,11 @@
-import { Document } from './../models/document';
+import { adminMiddleware } from './../core/admin.middleware';
 import { DocumentService } from './../services/document.service';
 import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 import express from 'express';
 import multer from 'multer';
 import { env } from '../core/environnement';
+import jwt from 'express-jwt';
 
 const app = express();
 let router = Router();
@@ -14,7 +15,10 @@ let router = Router();
 export const DocumentController = (app: Application) => {
     const service = new DocumentService();
 
-    // router.use(adminMiddleware); // appel du middleware vérifiant le role du user
+    if (!process.env.WILD_JWT_SECRET) {
+      throw new Error('Secret is not defined');
+  }
+    router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     const storage = multer.diskStorage({
       destination: (req, file, cb ) => {
@@ -33,7 +37,7 @@ export const DocumentController = (app: Application) => {
       },
     });
 
-    router.post('/file', upload.single('file'), async (req, res, next) => {
+    router.post('/file', adminMiddleware, upload.single('file'), async (req, res, next) => {
       const file = req.file;
       if (!file) {
         const error = new Error('Please upload a file');

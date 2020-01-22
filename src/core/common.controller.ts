@@ -1,6 +1,5 @@
 import { Application, Router, Request, Response } from 'express';
 import { AbstractService } from './abstract.service';
-import jwt = require('express-jwt');
 
 export const commonController = (app: Application, service: AbstractService<any>, abstractRouter = Router()) => {
 
