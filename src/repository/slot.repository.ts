@@ -1,4 +1,3 @@
-
 import { AbstractRepository } from '../core/abstract.repository';
 import { Slot } from '../models/slot';
 

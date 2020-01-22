@@ -11,7 +11,7 @@ export const EventController = (app: Application) => {
     const service = new EventService();
     let router = Router();
 
-    router.use(adminMiddleware); // appel du middleware vérifiant le role du user
+    // router.use(adminMiddleware); // appel du middleware vérifiant le role du user
 
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
@@ -20,17 +20,12 @@ export const EventController = (app: Application) => {
     // router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     router.get('/date', async (req, res) => {
-        if ((req as any).user.function === 'admin') {
-
-            try {
+        try {
                 const result = await service.getByDate();
                 res.send(result);
             } catch (error) {
-                res.status(404).send('Les évenements n\'ont pas été trouvé');
+                res.status(404).send('Les évenements n\'ont pas été trouvés');
             }
-        } else {
-            res.status(401).send('Unauthorized');
-        }
     });
 
     router = commonController(app, service, router);

@@ -6,8 +6,13 @@ export class UserService extends AbstractService<User> {
 
     repository = new UserRepository();
 
-    async getBySearch(word: string) {
-        const search = await this.repository.findByEmail(word);
+    getById(id: number) {
+        const search = this.repository.findById(id);
+        return search;
+    }
+
+    getBySearch(word: string) {
+        const search = this.repository.findByEmail(word);
         return search;
     }
 
@@ -16,7 +21,7 @@ export class UserService extends AbstractService<User> {
         return user;
     }
     updateUserAccount(userId: number) {
-        const user = this.repository.updateAccountStatut(userId);
+        const user =  this.repository.updateAccountStatut(userId);
         return user;
     }
 }

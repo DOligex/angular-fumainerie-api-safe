@@ -6,8 +6,4 @@ export class NewsService extends AbstractService<News> {
 
         repository = new NewsRepository();
 
-        async getValide() {
-                const search = await this.repository.getValidated(1);
-                return search;
-        }
 }

@@ -6,8 +6,8 @@ export class TokenService extends AbstractService<Token> {
 
     repository = new TokenRepository();
 
-    async create(token: Token) {
-        return await this.repository.save(token);
+    create(token: Token) {
+        return this.repository.save(token);
     }
 
     getByValue(value: string) {

@@ -7,14 +7,11 @@ import { commonController } from '../core/common.controller';
 
 export const SlotController = (app: Application) => {
     const service = new SlotService();
-    let router = Router();
+    const router = commonController(app, service);
 
-    router.get('/all', async (req, res) => {
-       const slots =  await service.getAll();
-       res.send(slots);
+    router.get('/specifique', async (req, res) => {
+       res.send('resultat');
     });
-    // Il manque le passage du routeur au commonController(service, router) 🤨
-    router = commonController(app, service);
 
     app.use('/slot', router);
 };

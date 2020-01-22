@@ -1,5 +1,5 @@
 import { UserService } from './../services/user.service';
-import { Application } from 'express';
+import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 import jwt = require('express-jwt');
 import { User } from 'src/models/user';
@@ -10,17 +10,21 @@ import { User } from 'src/models/user';
 export const UserController = (app: Application) => {
 
     const service = new UserService();
-    const router = commonController(app, service);
+    let userRouter = Router();
 
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
     }
-    // to enable the bottom line for the auth process work 🤨
-    // router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
+    userRouter.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
-    router.get('/specificroute', (req, res) => {
-
-        res.send('totot');
+    userRouter.get('/me', async (req, res) => {
+        (req as any).user.password = 'null';
+        const user = await service.getById((req as any).user.id);
+        if (!user) {
+            res.status(400).send('Aucun utilisateur trouvé pour ce token');
+        }
+        res.send(user);
     });
-    app.use('/user', router);
+    userRouter = commonController(app, service, userRouter);
+    app.use('/user', userRouter);
 };

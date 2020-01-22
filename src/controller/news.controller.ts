@@ -6,14 +6,7 @@ export const NewsController = (app: Application) => {
     const service = new NewsService();
     let router = Router();
 
-    router.get('/validations', async (req, res) => {
-        try {
-            const result = await service.getValide();
-            res.send(result);
-        } catch (error) {
-            res.status(404).send('source non trouvée');
-
-        }
+    router.get('/specificroute', async (req, res) => {
         res.send('resultat');
     });
 
