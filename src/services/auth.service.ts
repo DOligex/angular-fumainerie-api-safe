@@ -58,7 +58,7 @@ export class AuthService {
             throw error;
         }
 
-        const payload = {id: user.id, email: user.email, firstname: user.firstname, accountStatus: user.account_status, fonction: user.fonction};
+        const payload = {id: user.id, email: user.email, firstname: user.firstname, accountStatus: user.account_status, function: user.function};
         if (!process.env.WILD_JWT_SECRET) {
             throw new Error('Server is not correctly configured');
         }
