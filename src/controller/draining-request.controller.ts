@@ -50,6 +50,8 @@ export const DrainingRequestController = (app: Application) => {
     router.get('/unchecked', async (req, res) => {
         try {
             const result = await service.getAllDrainingRequestUnchecked();
+            console.log(result);
+
             const arrayA = [];
             const useridArray: number[] = [];
             result.filter((element: { user_id: number; }) => useridArray.push(element.user_id));
@@ -59,6 +61,8 @@ export const DrainingRequestController = (app: Application) => {
                 const depart = realUserIdArray[index];
                 arrayA.push(result.filter((object: { user_id: number; }) => object.user_id === depart));
             }
+            console.log(arrayA);
+
             res.send(arrayA);
 
         } catch (error) {

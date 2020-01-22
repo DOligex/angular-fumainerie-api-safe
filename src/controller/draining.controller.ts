@@ -31,7 +31,6 @@ export const DrainingController = (app: Application) => {
     router.put('/status', async (req, res) => {
         const userId = req.body.id;
         try {
-
             const result = await service.update(userId);
             res.send(result);
         } catch (error) {
