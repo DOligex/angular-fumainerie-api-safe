@@ -11,8 +11,6 @@ export const EventController = (app: Application) => {
     const service = new EventService();
     let router = Router();
 
-    // router.use(adminMiddleware); // appel du middleware vérifiant le role du user
-
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
     }
