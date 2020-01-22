@@ -15,6 +15,17 @@ let router = Router();
 export const DocumentController = (app: Application) => {
     const service = new DocumentService();
 
+    router.get('/accueil', async (req, res, next) => {
+
+      try {
+        const result = await service.getAll();
+        res.send(result);
+    } catch (error) {
+        res.status(404).send('Récupération impossible');
+    }
+
+    });
+
     if (!process.env.WILD_JWT_SECRET) {
       throw new Error('Secret is not defined');
   }
