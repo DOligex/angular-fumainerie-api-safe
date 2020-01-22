@@ -7,7 +7,7 @@ import { commonController } from '../core/common.controller';
 
 export const DrainingController = (app: Application) => {
     const service = new DrainingService();
-    let router = Router();
+    const router = Router();
 
     router.get('/user/:id', async (req, res) => {
         const userId = parseInt(req.params.id, 10);
@@ -39,7 +39,7 @@ export const DrainingController = (app: Application) => {
         }
     });
 
-    router = commonController(app, service, router);
+    // router = commonController(app, service, router);
 
     app.use('/draining', router);
 };
