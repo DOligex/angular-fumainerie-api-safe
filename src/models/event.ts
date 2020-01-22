@@ -10,6 +10,7 @@ export class Event {
     public deleteAt!: string;
     public author!: string;
     public date!: string;
+    public time!: string;
     public description!: string;
     public user_id!: number;
 
