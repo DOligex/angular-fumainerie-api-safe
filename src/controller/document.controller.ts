@@ -24,10 +24,10 @@ export const DocumentController = (app: Application) => {
     }
   });
 
-  // if (!process.env.WILD_JWT_SECRET) {
-  //   throw new Error('Secret is not defined');
-  // }
-  // router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
+  if (!process.env.WILD_JWT_SECRET) {
+    throw new Error('Secret is not defined');
+  }
+  router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
   const storage = multer.diskStorage({
     destination: (req, file, cb ) => {
