@@ -4,6 +4,6 @@ export const vidangeurMiddleware = (req: Request, res: Response, next: NextFunct
     if ((req as any).user.function === 'vidangeur') {
     next();
     } else {
-        res.sendStatus(401).send('Unauthorized');
+        res.status(401).send('Unauthorized');
 }
 };
