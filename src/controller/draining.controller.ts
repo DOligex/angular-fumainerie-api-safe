@@ -15,7 +15,7 @@ export const DrainingController = (app: Application) => {
         throw new Error('Secret is not defined');
     }
     router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
-
+// Get draining done by for the vidangeur by the vidangeur
     router.get('/user/:id', async (req, res) => {
         const userId = parseInt(req.params.id, 10);
         try {
@@ -25,6 +25,17 @@ export const DrainingController = (app: Application) => {
             res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
         }
     });
+// Get next draining for the producteur
+    router.get('/user/:id/next', async (req, res) => {
+        const userId = parseInt(req.params.id, 10);
+        try {
+            const result = await service.getNextDrainingByUserId(userId);
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
+        }
+    });
+// Get draining accepted undone by the vidangeur for the vidangeur
     router.get('/accepted/:id', async (req, res) => {
         const userId = parseInt(req.params.id, 10);
         try {
