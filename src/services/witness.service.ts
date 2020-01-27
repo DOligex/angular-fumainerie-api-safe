@@ -6,8 +6,8 @@ export class WitnessService extends AbstractService<Witness> {
 
     repository = new WitnessRepository();
 
-    async getValide() {
-        const search = await this.repository.getValidated(1);
+    getValide() {
+        const search = this.repository.getValidated(1);
         return search;
     }
 

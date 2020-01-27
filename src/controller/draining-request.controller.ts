@@ -13,7 +13,7 @@ export const DrainingRequestController = (app: Application) => {
     const drainingService = new DrainingService();
 
     let router = Router();
-    
+
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
     }
@@ -46,8 +46,10 @@ export const DrainingRequestController = (app: Application) => {
             for (const request of drainingRequest) {
                 delete request.name;
                 request.draining_id = idDrainingCreated;
+                // Il ne s'agit pas d'une opération d'upload, mais d'un create/save 🤨
                 const result = await service.upload(request);
             }
+            // Trop de logique dans le controller, il faut déplacer ça dans le service 🤨
             res.send({id: idDrainingCreated});
         } catch (error) {
             res.status(404).send('Impossible de créer une demande de vidange');
