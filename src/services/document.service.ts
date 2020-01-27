@@ -19,8 +19,4 @@ export class DocumentService extends AbstractService<Document> {
         return search;
     }
 
-    public create(document: Document) {
-        this.upload(document);
-      }
-
 }

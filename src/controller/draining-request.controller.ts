@@ -46,8 +46,7 @@ export const DrainingRequestController = (app: Application) => {
             for (const request of drainingRequest) {
                 delete request.name;
                 request.draining_id = idDrainingCreated;
-                // Il ne s'agit pas d'une opération d'upload, mais d'un create/save 🤨
-                const result = await service.upload(request);
+                const result = await service.create(request);
             }
             // Trop de logique dans le controller, il faut déplacer ça dans le service 🤨
             res.send({id: idDrainingCreated});
@@ -65,8 +64,8 @@ export const DrainingRequestController = (app: Application) => {
             result.filter((element: { user_id: number; }) => useridArray.push(element.user_id));
             const realUserIdArray = Array.from(new Set(useridArray));
             // tslint:disable-next-line: prefer-for-of
-            for (let index = 0; index < realUserIdArray.length; index++) {
-                const depart = realUserIdArray[index];
+            for (const real of realUserIdArray) {
+                const depart = real;
                 arrayA.push(result.filter((object: { user_id: number; }) => object.user_id === depart));
             }
             console.log(arrayA);
