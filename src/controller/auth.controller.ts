@@ -25,6 +25,7 @@ export const AuthController = (app: Application) => {
 
     authRouter.post('/signin', async (req: Request, res: Response) => {
         const userB: User = req.body ;
+
         try {
             const {token, user} = await authService.signIn(userB.email, userB.password);
             res.set('access-control-expose-headers', 'JWT-TOKEN');
