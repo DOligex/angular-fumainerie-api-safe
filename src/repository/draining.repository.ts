@@ -12,9 +12,14 @@ export class DrainingRepository extends AbstractRepository<Draining> {
     private POST_EMPTY_DRAINING = 'INSERT INTO draining (user_id) VALUES (?)';
     private UPDATE_DRAINING_REQUEST_STATUS = 'UPDATE draining SET status = 1 WHERE user_id = ?';
     private UPDATE_DRAINING_SESSION_DATE = 'UPDATE draining SET ? WHERE user_id = ? AND done_draining =0';
+    private GET_NEXT_DRAINING_BY_USER_ID = 'SELECT d.id, dR.id, dR.session_date, dR.slot_id, dR.accepted, d.done_draining, dR.user_id, slot.name FROM draining_request as dR INNER JOIN slot ON slot.id = dR.slot_id INNER JOIN draining as d ON d.id=dR.draining_id AND dR.user_id= ? WHERE dR.accepted=1 AND d.done_draining = 0 ORDER BY session_date';
 
     async getDraining(userId: number) {
         const result = await this.db.query(this.GET_DRAINING_DONE_BY_DATE, userId);
+        return result;
+    }
+    async getNextDraining(userId: number) {
+        const result = await this.db.query(this.GET_NEXT_DRAINING_BY_USER_ID, userId);
         return result;
     }
     async createDraining(userId: number): Promise<number> {

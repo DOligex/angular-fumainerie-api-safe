@@ -25,10 +25,20 @@ export const DocumentController = (app: Application) => {
     }
   });
 
-  // if (!process.env.WILD_JWT_SECRET) {
-  //   throw new Error('Secret is not defined');
-  // }
-  // router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
+  router.get('/recherche/:word', async (req, res) => {
+      const word = req.params.word;
+      try {
+          const result = await service.getBySearch(word);
+          res.send(result);
+      } catch (error) {
+          res.status(404).send('La recherche n\'a rien donné');
+      }
+});
+
+  if (!process.env.WILD_JWT_SECRET) {
+    throw new Error('Secret is not defined');
+  }
+  router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
   const storage = multer.diskStorage({
     destination: (req, file, cb ) => {
@@ -66,15 +76,6 @@ export const DocumentController = (app: Application) => {
       res.send(result);
   });
 
-  router.get('/recherche/:word', async (req, res) => {
-      const word = req.params.word;
-      try {
-          const result = await service.getBySearch(word);
-          res.send(result);
-      } catch (error) {
-          res.status(404).send('Erreur recherche mot');
-      }
-});
   router = commonController(app, service, router);
   app.use('/document', router);
 };

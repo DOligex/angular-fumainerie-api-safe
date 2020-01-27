@@ -28,27 +28,12 @@ export const DrainingRequestController = (app: Application) => {
             res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
         }
     });
-    router.get('/user/:id/next', async (req, res) => {
-        const userId = parseInt(req.params.id, 10);
-        try {
-            const result = await service.getNextDrainingByUserId(userId);
-            res.send(result);
-        } catch (error) {
-            res.status(404).send('L\'id ' + userId + 'n\'a pas été trouvé');
-        }
-    });
 
     router.post('/draining', async (req, res) => {
         const drainingRequest = req.body;
         const userId: number = parseInt(req.body[0].user_id, 10);
         try {
-            const idDrainingCreated = await drainingService.createDraining(userId);
-            for (const request of drainingRequest) {
-                delete request.name;
-                request.draining_id = idDrainingCreated;
-                const result = await service.create(request);
-            }
-            // Trop de logique dans le controller, il faut déplacer ça dans le service 🤨
+            const idDrainingCreated = await drainingService.createDraining(userId, drainingRequest);
             res.send({id: idDrainingCreated});
         } catch (error) {
             res.status(404).send('Impossible de créer une demande de vidange');
@@ -57,26 +42,14 @@ export const DrainingRequestController = (app: Application) => {
     router.get('/unchecked', vidangeurMiddleware, async (req, res) => {
         try {
             const result = await service.getAllDrainingRequestUnchecked();
-            console.log(result);
-
-            const arrayA = [];
-            const useridArray: number[] = [];
-            result.filter((element: { user_id: number; }) => useridArray.push(element.user_id));
-            const realUserIdArray = Array.from(new Set(useridArray));
-            // tslint:disable-next-line: prefer-for-of
-            for (const real of realUserIdArray) {
-                const depart = real;
-                arrayA.push(result.filter((object: { user_id: number; }) => object.user_id === depart));
-            }
-            console.log(arrayA);
-
-            res.send(arrayA);
+            res.send(result);
 
         } catch (error) {
             res.status(404).send('Impossible de recuperer les demandes');
 
         }
     });
+
     router.put('/:id/accepte', vidangeurMiddleware, async (req: Request, res: Response) => {
         const id = parseInt(req.params.id, 10);
         const userId = req.body.user_id;
