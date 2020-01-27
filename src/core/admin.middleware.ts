@@ -5,6 +5,6 @@ export const adminMiddleware = (req: Request, res: Response, next: NextFunction)
     if ((req as any).user.function === 'admin') {
     next();
     } else {
-        res.sendStatus(401).send('Unauthorized');
+        res.sendStatus(401);
 }
 };
