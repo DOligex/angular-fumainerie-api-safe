@@ -27,5 +27,15 @@ export const WitnessController = (app: Application) => {
     router.use(adminMiddleware);
     router = commonController(app, service, router);
 
+
+    router.get('/valided', async (req, res) => {
+        try {
+            const result = await service.getRequestWitnessValided();
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('status introuvable');
+        }
+});
+    router = commonController(app, service, router);
     app.use('/witness', router);
 };

@@ -10,5 +10,4 @@ export class WitnessService extends AbstractService<Witness> {
         const search = this.repository.getValidated(1);
         return search;
     }
-
 }
