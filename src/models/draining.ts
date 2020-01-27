@@ -36,9 +36,4 @@ export class Draining {
     constructor(input: Draining) {
         Object.assign(this, input);
     }
-
-    // createFromHomeRequestUserSlotJoin(input: any) {
-    //     this.id = input.id;
-    //     this.;
-    // }
 }

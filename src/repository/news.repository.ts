@@ -8,10 +8,10 @@ export class NewsRepository extends AbstractRepository<News> {
 
     }
 
-    // private GET_VALIDED = 'SELECT * FROM news JOIN user ON user_id = user.id WHERE status=1;';
+    private GET_VALIDED = 'SELECT * FROM news JOIN user ON user_id = user.id WHERE status=1;';
 
-    // async getValidated(status: number) {
-    //     const result = await this.db.query(this.GET_VALIDED, [this.GET_VALIDED]);
-    //     return result;
-    // }
+    async getValidated(status: number) {
+        const result = await this.db.query(this.GET_VALIDED, [this.GET_VALIDED]);
+        return result;
+    }
 }

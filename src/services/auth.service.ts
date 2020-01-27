@@ -36,6 +36,7 @@ export class AuthService {
 
             await this.nodemailer(tokenString, user);
         } else {
+            // Améliorer la finesse de gestion d'erreur 🤨
             throw new Error('Mail already used ');
 
         }
