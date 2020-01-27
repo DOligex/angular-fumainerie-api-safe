@@ -16,7 +16,7 @@ export const NewsController = (app: Application) => {
         }
       });
 
-    router.use(adminMiddleware);
+    // router.use(adminMiddleware);
     router = commonController(app, service, router);
     app.use('/news', router);
 };
