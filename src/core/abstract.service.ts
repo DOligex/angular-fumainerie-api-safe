@@ -34,5 +34,9 @@ export abstract class AbstractService<T> {
     async upload(element: T) {
         return this.repository.save(element);
     }
+    // Sauvegarde d'un element
+    async save(element: T) {
+        return this.repository.save(element);
+    }
 
 }
