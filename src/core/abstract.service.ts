@@ -1,4 +1,4 @@
-import { AbstractRepository } from './abstract.repository';
+import { AbstractRepository } from '../core/abstract.repository';
 
 export abstract class AbstractService<T> {
 
@@ -32,6 +32,10 @@ export abstract class AbstractService<T> {
 
     // Upload de l'élément
     async upload(element: T) {
+        return this.repository.save(element);
+    }
+    // Sauvegarde d'un element
+    async save(element: T) {
         return this.repository.save(element);
     }
 

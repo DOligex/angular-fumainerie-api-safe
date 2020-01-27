@@ -1,4 +1,3 @@
-// import { Connection } from 'mysql';
 import { Connection } from 'mysql';
 
 export class DbHandler {
@@ -17,10 +16,12 @@ export class DbHandler {
         this.connection = connection;
     }
 
-    query( sql: string, args?: any ) {
+    query( sql: string, args?: any ): Promise<any> {
         return new Promise( ( resolve, reject ) => {
             this.connection.query( sql, args, ( err, rows ) => {
                 if ( err ) {
+                    console.error(err);
+
                     return reject( err );
                 }
                 resolve( rows );

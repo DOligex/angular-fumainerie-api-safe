@@ -9,6 +9,7 @@ export default async () => {
     user: process.env.WILD_API_DB_USER,
     password: process.env.WILD_API_FUMAINERIE_DB_PASSWORD,
     database: process.env.WILD_API_DB_DATABASE,
+    dateStrings: true,
   });
 
   DbHandler.getInstance(connexion);

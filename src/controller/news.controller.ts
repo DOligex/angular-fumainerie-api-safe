@@ -1,17 +1,22 @@
-import { NewsService } from '../services/news.service';
-import { Application } from 'express';
+import { adminMiddleware } from './../core/admin.middleware';
+import { NewsService } from './../services/news.service';
+import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
-
-// Le controller vous servira à réceptionner les requêtes associées aux actualités
-// @param app l'application express
 
 export const NewsController = (app: Application) => {
     const service = new NewsService();
-    const router = commonController(app, service);
+    let router = Router();
 
-    router.get('/specificroute', (req, res) => {
-        res.send('totot');
-    });
+    router.get('/valided', async (req, res, next) => {
+        try {
+          const result = await service.getAll();
+          res.send(result);
+        } catch (error) {
+          res.status(404).send('Récupération impossible');
+        }
+      });
 
+    // router.use(adminMiddleware);
+    router = commonController(app, service, router);
     app.use('/news', router);
 };

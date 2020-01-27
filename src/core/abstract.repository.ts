@@ -1,3 +1,4 @@
+import { User } from './../models/user';
 import { DbHandler } from './../repository/db.handler';
 
 export abstract class AbstractRepository<T> {
@@ -11,19 +12,30 @@ export abstract class AbstractRepository<T> {
 
     constructor(tablename: string) {
         this.db = DbHandler.getInstance();
-        this.GET_ALL = `SELECT * FROM ${tablename} ;`;
+        this.GET_ALL = `SELECT * FROM ${tablename}`;
         this.GET_BY_ID = `SELECT * FROM ${tablename} WHERE id = ? ;`;
         this.PUT_BY_ID = `UPDATE ${tablename} SET ? WHERE id = ? ;`;
         this.DEL_BY_ID = `DELETE FROM ${tablename} WHERE id = ? ;`;
         this.POST_BY_ID = `INSERT INTO ${tablename} SET ? ;`;
     }
 
-    findAll(): Promise<T[]> {
-        return this.db.query(this.GET_ALL) as Promise<T[]>;
+    async findAll(): Promise<any[]> {
+        let result: any[] = await (this.db.query(this.GET_ALL) as Promise<any[]>);
+
+        if (result[0] && result[0]?.user_id != null) {
+            result = await result.map( async (entity) => {
+            const user  = await this.db.query('SELECT * from user WHERE  id = ? ;', entity.user_id);
+            entity.user = user[0];
+            return entity;
+        });
+        }
+
+        return Promise.all(result);
     }
 
-    findById(id: number): Promise<T[]> {
-        return this.db.query(this.GET_BY_ID, id) as Promise<T[]>;
+    async findById(id: number): Promise<T[]> {
+        const user =  await (this.db.query(this.GET_BY_ID, id) as Promise<any[]>);
+        return user[0] || null;
     }
 
     modify(element: T, id: number): Promise<T> {
@@ -34,7 +46,7 @@ export abstract class AbstractRepository<T> {
         return this.db.query(this.DEL_BY_ID, id) as Promise<T>;
     }
 
-    save(element: T): Promise<T> {
+    save(element: any): Promise<any> {
         return this.db.query(this.POST_BY_ID, element) as Promise<T>;
     }
 }

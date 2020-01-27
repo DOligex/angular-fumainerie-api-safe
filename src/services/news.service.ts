@@ -5,4 +5,5 @@ import { AbstractService } from '../core/abstract.service';
 export class NewsService extends AbstractService<News> {
 
         repository = new NewsRepository();
+
 }
