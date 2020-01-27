@@ -12,7 +12,16 @@ export class DrainingRequestService extends AbstractService<DrainingRequest> {
     }
     async getAllDrainingRequestUnchecked() {
         const allDraining = await this.repository.getAllDrainingRequestUnchecked();
-        return allDraining;
+        const arrayA = [];
+        const useridArray: number[] = [];
+        allDraining.filter((element: { user_id: number; }) => useridArray.push(element.user_id));
+        const realUserIdArray = Array.from(new Set(useridArray));
+        for (const user of realUserIdArray) {
+            const depart = user;
+            arrayA.push(allDraining.filter((object: { user_id: number; }) => object.user_id === depart));
+        }
+
+        return arrayA;
     }
 
     }
