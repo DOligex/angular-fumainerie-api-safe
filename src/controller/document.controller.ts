@@ -30,9 +30,10 @@ export const DocumentController = (app: Application) => {
           const result = await service.getBySearch(word);
           res.send(result);
       } catch (error) {
-          res.status(404).send('Erreur recherche mot');
+          res.status(404).send('La recherche n\'a rien donné');
       }
 });
+
   if (!process.env.WILD_JWT_SECRET) {
     throw new Error('Secret is not defined');
   }
