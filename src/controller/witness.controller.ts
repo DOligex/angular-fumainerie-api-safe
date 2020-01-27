@@ -19,6 +19,7 @@ export const WitnessController = (app: Application) => {
             res.status(404).send('source non trouvée');
         }
     });
+
     if (!process.env.WILD_JWT_SECRET) {
         throw new Error('Secret is not defined');
     }
@@ -27,10 +28,9 @@ export const WitnessController = (app: Application) => {
     router.use(adminMiddleware);
     router = commonController(app, service, router);
 
-
     router.get('/valided', async (req, res) => {
         try {
-            const result = await service.getRequestWitnessValided();
+            const result = await service.getValide();
             res.send(result);
         } catch (error) {
             res.status(404).send('status introuvable');
