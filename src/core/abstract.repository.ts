@@ -1,3 +1,4 @@
+import { User } from './../models/user';
 import { DbHandler } from './../repository/db.handler';
 
 export abstract class AbstractRepository<T> {
@@ -18,12 +19,23 @@ export abstract class AbstractRepository<T> {
         this.POST_BY_ID = `INSERT INTO ${tablename} SET ? ;`;
     }
 
-    findAll(): Promise<T[]> {
-        return this.db.query(this.GET_ALL) as Promise<T[]>;
+    async findAll(): Promise<any[]> {
+        let result: any[] = await (this.db.query(this.GET_ALL) as Promise<any[]>);
+
+        if (result[0] && result[0]?.user_id != null) {
+            result = await result.map( async (entity) => {
+            const user  = await this.db.query('SELECT * from user WHERE  id = ? ;', entity.user_id);
+            entity.user = user[0];
+            return entity;
+        });
+        }
+
+        return Promise.all(result);
     }
 
-    findById(id: number): Promise<T[]> {
-        return this.db.query(this.GET_BY_ID, id) as Promise<T[]>;
+    async findById(id: number): Promise<T[]> {
+        const user =  await (this.db.query(this.GET_BY_ID, id) as Promise<any[]>);
+        return user[0] || null;
     }
 
     modify(element: T, id: number): Promise<T> {

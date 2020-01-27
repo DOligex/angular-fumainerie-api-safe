@@ -2,7 +2,6 @@ import { UserService } from './../services/user.service';
 import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
 import jwt = require('express-jwt');
-import { User } from 'src/models/user';
 
 // Le controller vous servira à réceptionner les requêtes associées aux utilisateurs
 // @param app l'application express
@@ -18,6 +17,7 @@ export const UserController = (app: Application) => {
     userRouter.use(jwt({secret: process.env.WILD_JWT_SECRET}));
 
     userRouter.get('/me', async (req, res) => {
+        (req as any).user.password = 'null';
         const user = await service.getById((req as any).user.id);
         if (!user) {
             res.status(400).send('Aucun utilisateur trouvé pour ce token');

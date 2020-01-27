@@ -19,8 +19,8 @@ export class DrainingService extends AbstractService<Draining> {
     async modifyDraining(element: Draining, id: number) {
         return this.repository.modifyDraining(element, id);
     }
-    async getDrainingAccepted() {
-        return this.repository.getDrainingAccepted();
+    async getDrainingAccepted(userId: number) {
+        return this.repository.getDrainingAccepted(userId);
     }
 
 }
