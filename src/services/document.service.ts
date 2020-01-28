@@ -18,11 +18,6 @@ export class DocumentService extends AbstractService<Document> {
         const search = await this.repository.searchDocument(word);
         return search;
     }
-
-    public create(document: Document) {
-        this.upload(document);
-      }
-
       getValide() {
         const search = this.repository.getValidated(1);
         return search;

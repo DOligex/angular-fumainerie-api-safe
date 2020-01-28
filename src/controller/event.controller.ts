@@ -1,3 +1,4 @@
+import { connected } from './../core/connected-middleware';
 import { adminMiddleware } from './../core/admin.middleware';
 import { Application, Router } from 'express';
 import { commonController } from '../core/common.controller';
@@ -11,11 +12,7 @@ export const EventController = (app: Application) => {
     const service = new EventService();
     let router = Router();
 
-    if (!process.env.WILD_JWT_SECRET) {
-        throw new Error('Secret is not defined');
-    }
-    // to enable the bottom line for the auth process work 🤨
-    // router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
+    router.use(connected());
 
     router.get('/date', async (req, res) => {
         try {
