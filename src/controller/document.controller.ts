@@ -24,6 +24,15 @@ export const DocumentController = (app: Application) => {
     }
   });
 
+  router.get('/validations', async (req, res) => {
+    try {
+        const result = await service.getValide();
+        res.send(result);
+    } catch (error) {
+        res.status(404).send('source non trouvée');
+    }
+});
+
   router.get('/recherche/:word', async (req, res) => {
       const word = req.params.word;
       try {
