@@ -1,3 +1,4 @@
+import jwt from 'express-jwt';
 import express, { Application, Router } from 'express';
 import multer from 'multer';
 import { commonController } from '../core/common.controller';
