@@ -49,7 +49,7 @@ export const commonController = (app: Application, service: AbstractService<any>
     abstractRouter.post('/', (req: Request, res: Response) => {
         const element = req.body;
         try {
-            service.upload(element);
+            service.create(element);
             res.send(element);
         } catch (error) {
             res.status(404).send('Erreur');

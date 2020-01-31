@@ -21,8 +21,10 @@ export class AuthService {
 
     async signUp(user: User) {
         const userEmail = await this.repository.findByEmail(user.email);
+        // on peut pas faire de double condition comme ça, il faudrait userEmail === null || userEmail === undefined.
+        // Sauf que (userEmail === null || userEmail === undefined) <=> (userEmail == null)
 
-        if (userEmail == null || undefined) {
+        if (userEmail == null) {
             user.password = await hash(user.password);
 
             randomBytes(12).toString('hex');

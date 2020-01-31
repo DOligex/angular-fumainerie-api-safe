@@ -1,11 +1,13 @@
-import { adminMiddleware } from './../core/admin.middleware';
-import { DocumentService } from './../services/document.service';
-import { Application, Router } from 'express';
-import { commonController } from '../core/common.controller';
-import express from 'express';
-import multer from 'multer';
-import { env } from '../core/environnement';
 import jwt from 'express-jwt';
+import express, { Application, Router } from 'express';
+import multer from 'multer';
+import { commonController } from '../core/common.controller';
+import { env } from '../core/environnement';
+import { UserFunction } from '../core/user-function.enum';
+import { attachUser } from './../core/attach-user.middleware';
+import { checkFunction as checkFunction } from './../core/check-role-middleware';
+import { connected } from './../core/connected-middleware';
+import { DocumentService } from './../services/document.service';
 
 const app = express();
 // Le controller vous servira à réceptionner les requêtes associées aux documents
@@ -23,6 +25,15 @@ export const DocumentController = (app: Application) => {
       res.status(404).send('Récupération impossible');
     }
   });
+
+  router.get('/validations', async (req, res) => {
+    try {
+        const result = await service.getValide();
+        res.send(result);
+    } catch (error) {
+        res.status(404).send('source non trouvée');
+    }
+});
 
   router.get('/recherche/:word', async (req, res) => {
       const word = req.params.word;
@@ -55,8 +66,13 @@ export const DocumentController = (app: Application) => {
       cb(null, true);
     },
   });
+//   Ici, au lieu d'avoir un middleware par role (admin / user ... ) Vous pouvez faire un middleware paramétrable:
+//    checkRole
+//   On pourra regarder ensemble pour la mise en place si vous voulez
+  router.use(connected());
+  router.use(attachUser());
 
-  router.post('/file', adminMiddleware, upload.single('file'), async (req, res, next) => {
+  router.post('/file', checkFunction(UserFunction.ADMIN), upload.single('file'), async (req, res, next) => {
       const file = req.file;
       if (!file) {
         const error = new Error('Please upload a file');
