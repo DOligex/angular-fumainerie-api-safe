@@ -18,5 +18,9 @@ export class DocumentService extends AbstractService<Document> {
         const search = await this.repository.searchDocument(word);
         return search;
     }
+      getValide() {
+        const search = this.repository.getValidated(1);
+        return search;
+    }
 
 }

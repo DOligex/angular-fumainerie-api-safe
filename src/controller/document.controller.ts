@@ -1,3 +1,4 @@
+import jwt from 'express-jwt';
 import express, { Application, Router } from 'express';
 import multer from 'multer';
 import { commonController } from '../core/common.controller';
@@ -24,6 +25,15 @@ export const DocumentController = (app: Application) => {
       res.status(404).send('Récupération impossible');
     }
   });
+
+  router.get('/validations', async (req, res) => {
+    try {
+        const result = await service.getValide();
+        res.send(result);
+    } catch (error) {
+        res.status(404).send('source non trouvée');
+    }
+});
 
   router.get('/recherche/:word', async (req, res) => {
       const word = req.params.word;
