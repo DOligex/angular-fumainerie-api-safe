@@ -22,7 +22,7 @@ async function startServer() {
     // Chargement des différents loader
     await loaders(app);
 
-    // Ajout des différentes route de votre application
+    // Ajout des différentes routes de votre application
     DocumentController(app);
     DrainingController(app);
     DrainingRequestController(app);
