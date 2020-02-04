@@ -30,6 +30,9 @@ export class DrainingService extends AbstractService<Draining> {
     async getDrainingAccepted(userId: number) {
         return this.repository.getDrainingAccepted(userId);
     }
+    async getDrainingDone(userId: number) {
+        return await this.repository.getDrainingDone(userId);
+    }
     async getNextDrainingByUserId(userId: number) {
         const draining = await this.repository.getNextDraining(userId);
         return draining;
