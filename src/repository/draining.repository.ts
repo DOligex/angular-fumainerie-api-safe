@@ -13,6 +13,7 @@ export class DrainingRepository extends AbstractRepository<Draining> {
     private UPDATE_DRAINING_REQUEST_STATUS = 'UPDATE draining SET status = 1 WHERE user_id = ?';
     private UPDATE_DRAINING_SESSION_DATE = 'UPDATE draining SET ? WHERE user_id = ? AND done_draining =0';
     private GET_NEXT_DRAINING_BY_USER_ID = 'SELECT d.id, dR.id, dR.session_date, dR.slot_id, dR.accepted, d.done_draining, dR.user_id, slot.name FROM draining_request as dR INNER JOIN slot ON slot.id = dR.slot_id INNER JOIN draining as d ON d.id=dR.draining_id AND dR.user_id= ? WHERE dR.accepted=1 AND d.done_draining = 0 ORDER BY session_date';
+    private GET_DRAINING_DONE = 'SELECT d.*, slot.name, home.address, home.address_plus, home.phone, home.zip, home.city, user.firstname, user.lastname, draining_request.slot_id FROM draining as d INNER JOIN draining_request ON draining_request.draining_id=d.id INNER JOIN slot ON draining_request.slot_id=slot.id INNER JOIN home ON d.user_id=home.user_id INNER JOIN user ON d.user_id=user.id WHERE d.done_draining=1 AND d.vidangeur_id = ? ORDER BY session_date';
 
     async getDraining(userId: number) {
         const result = await this.db.query(this.GET_DRAINING_DONE_BY_DATE, userId);
@@ -34,6 +35,9 @@ export class DrainingRepository extends AbstractRepository<Draining> {
     }
     async getDrainingAccepted(userId: number) {
         return this.db.query(this.GET_DRAINING_ACCEPTED_UNDONE, userId);
+    }
+    async getDrainingDone(userId: number) {
+        return await this.db.query(this.GET_DRAINING_DONE, userId);
     }
 
 }

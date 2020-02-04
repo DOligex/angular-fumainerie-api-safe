@@ -46,6 +46,17 @@ export const DrainingController = (app: Application) => {
         }
     });
 
+// Get draining accepted done by the vidangeur for the vidangeur
+    router.get('/done/:id', async (req, res) => {
+        const userId = parseInt(req.params.id, 10);
+        try {
+            const result = await service.getDrainingDone(userId);
+            res.send(result);
+        } catch (error) {
+            res.status(404).send('Pas de demande trouvé');
+        }
+    });
+
     router.put('/status', vidangeurMiddleware, async (req, res) => {
         const userId = req.body.id;
         try {
