@@ -8,7 +8,6 @@ import { attachUser } from './../core/attach-user.middleware';
 import { checkFunction as checkFunction } from './../core/check-role-middleware';
 import { connected } from './../core/connected-middleware';
 import { DocumentService } from './../services/document.service';
-import jwt from 'express-jwt';
 
 const app = express();
 // Le controller vous servira à réceptionner les requêtes associées aux documents
@@ -90,4 +89,3 @@ export const DocumentController = (app: Application) => {
   router = commonController(app, service, router);
   app.use('/document', router);
 };
-
