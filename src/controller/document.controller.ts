@@ -84,4 +84,3 @@ export const DocumentController = (app: Application) => {
   router = commonController(app, service, router);
   app.use('/document', router);
 };
-
