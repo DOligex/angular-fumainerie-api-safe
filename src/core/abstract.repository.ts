@@ -1,4 +1,3 @@
-import { User } from './../models/user';
 import { DbHandler } from './../repository/db.handler';
 
 export abstract class AbstractRepository<T> {

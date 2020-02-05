@@ -45,11 +45,6 @@ export const DocumentController = (app: Application) => {
       }
 });
 
-  if (!process.env.WILD_JWT_SECRET) {
-    throw new Error('Secret is not defined');
-  }
-  router.use(jwt({secret: process.env.WILD_JWT_SECRET}));
-
   const storage = multer.diskStorage({
     destination: (req, file, cb ) => {
       cb(null, env.uploadFolder + '/');
@@ -89,4 +84,3 @@ export const DocumentController = (app: Application) => {
   router = commonController(app, service, router);
   app.use('/document', router);
 };
-
