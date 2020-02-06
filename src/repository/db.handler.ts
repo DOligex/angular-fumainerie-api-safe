@@ -1,43 +1,45 @@
-import { Connection } from 'mysql';
+import { Pool } from 'mysql';
 
 export class DbHandler {
 
     static instance: DbHandler;
-    private connection: Connection;
+    private pool: Pool;
 
-    static getInstance(connection?: Connection) {
-        if (!this.instance && connection != null) {
-            this.instance = new DbHandler(connection);
+    static getInstance(pool?: Pool) {
+        if (!this.instance && pool != null) {
+            this.instance = new DbHandler(pool);
         }
         return this.instance;
     }
 
-    private constructor(connection: Connection) {
-        this.connection = connection;
+    private constructor(pool: Pool) {
+        this.pool = pool;
     }
 
-    query( sql: string, args?: any ): Promise<any> {
-        return new Promise( ( resolve, reject ) => {
-            this.connection.query( sql, args, ( err, rows ) => {
-                if ( err ) {
-                    console.error(err);
-
-                    return reject( err );
-                }
-                resolve( rows );
-            } );
-        } );
+    query(sql: string, args?: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.pool.getConnection((err, connection) => {
+                connection.query(sql, args, (err, rows) => {
+                    connection.release();
+                    if (err) {
+                        console.error(err);
+                        return reject(err);
+                    }
+                    resolve(rows);
+                });
+            });
+        });
     }
 
     close() {
-        return new Promise( ( resolve, reject ) => {
-            this.connection.end( err => {
-                if ( err ) {
-                    return reject( err );
+        return new Promise((resolve, reject) => {
+            this.pool.end(err => {
+                if (err) {
+                    return reject(err);
                 }
                 resolve();
-            } );
-        } );
+            });
+        });
     }
 
 }

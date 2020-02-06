@@ -3,7 +3,8 @@ import { DbHandler } from '../repository/db.handler';
 
 export default async () => {
 
-  const connexion = mysql.createConnection({
+  const pool = mysql.createPool({
+    connectionLimit : 10,
     host: process.env.WILD_API_DB_HOST,
     port: Number(process.env.WILD_API_DB_PORT),
     user: process.env.WILD_API_DB_USER,
@@ -12,13 +13,7 @@ export default async () => {
     dateStrings: true,
   });
 
-  DbHandler.getInstance(connexion);
+  DbHandler.getInstance(pool);
 
-  connexion.connect((err) => {
-    if (err) { throw err; }
-    // tslint:disable-next-line: no-console
-    console.log('Connected!');
-  });
-
-  return connexion;
+  return pool;
 };
