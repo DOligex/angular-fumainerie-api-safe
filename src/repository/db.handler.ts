@@ -19,6 +19,7 @@ export class DbHandler {
     query(sql: string, args?: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.pool.getConnection((err, connection) => {
+                console.error(err);
                 connection.query(sql, args, (err, rows) => {
                     connection.release();
                     if (err) {
